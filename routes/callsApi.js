@@ -49,7 +49,8 @@ exports.findById = function(req, res) {
 	var id = req.param("id");
 	console.log('Retrieving mesa: ' + id);
 	db.collection('mesas', function(err, collection) {
-		collection.findOne({'Id': '3'}, function(err, item) {
+		id = '530e07dfcc722d0200000001';
+		collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
 			res.send("Item ---> " + item);
 			console.log('Item ---> ' + item);
 			console.log('err ---> ' + err);
