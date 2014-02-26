@@ -50,10 +50,12 @@ exports.findById = function(req, res) {
 	console.log('Retrieving mesa: ' + id);
 	db.collection('mesas', function(err, collection) {
 		collection.findOne({Id: id}, function(err, item) {
-			res.send("Item ---> " + item);
+			//res.send("Item ---> " + item);
+			console.log('Item ---> ' + item);
 		});
 		collection.findOne({'Id': id}, function(err, item) {
-			res.send("2 - Item ---> " + item);
+			//res.send("2 - Item ---> " + item);
+			console.log('Outro Item ---> ' + item);
 		});
 	});
 };
