@@ -4,6 +4,9 @@ Built with the Node.js and the [Express framework](http://expressjs.com/).
 
 One client application is available in [this repository](https://github.com/marcostomazini/acomanda)
 
+## Heroku ##
+heroku addons:add mongolab
+
 ## Setting Up ##
 
 - linux
