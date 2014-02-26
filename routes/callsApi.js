@@ -6,18 +6,18 @@ var Server = mongo.Server,
     BSON = mongo.BSONPure;
 	ObjectID = mongo.ObjectID;
 
-var stringConexao = "ds045628.mongolab.com";
-var portaConexao = 45628;
+var stringConexao = "ds033069.mongolab.com";
+var portaConexao = 33069;
 
 //var server = new Server('ds045628.mongolab.com', 45628, {auto_reconnect: true});	
 var server = new Server(stringConexao, portaConexao, {auto_reconnect: true});	
-db = new Db('heroku_app18216567', server, {safe: true});	
+db = new Db('heroku_app22498672', server, {safe: true});	
 
 db.open(function(err, db) {
 	console.log("tentando abrir conect");
 	if(err) { return console.log("erro aqui -> " + err); }	
 	
-	console.log("Connected to 'winedb' database");
+	console.log("Connected to 'ArquitetaWeb MocksApi' database");
 	
 	if (stringConexao == "localhost") {		
 		console.log("MONGO Authorized");
