@@ -56,8 +56,7 @@ exports.atualizarmesa = function(req, res) {
 	var id = req.param("id");
 	var situacao = req.param("situacao");	
 	console.log('Updating mesa: ' + id);
-	db.collection('itens', function(err, collection) {
-	
+	db.collection('mesas', function(err, collection) {	
 		collection.update({ 'Id' : id }, {$set: { 'Situacao': situacao }}, {safe:true}, function(err, result) {
 			if (err) {
 				console.log('Error updating mesa: ' + err);
