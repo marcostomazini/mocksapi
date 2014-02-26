@@ -54,13 +54,11 @@ exports.atualizarmesa = function(req, res) {
 	res.send("id" + req.param("id") + " situacao:" + req.param("situacao"));
     
 	var id = req.param("id");
-	var situacao = req.param("situacao");
-	var mesa = req.body;
-	delete mesa._id;
+	var situacao = req.param("situacao");	
 	console.log('Updating mesa: ' + id);
-	console.log(JSON.stringify(mesa));
 	db.collection('itens', function(err, collection) {
-		collection.update({'_id':new BSON.ObjectID(id)}, mesa, {safe:true}, function(err, result) {
+	
+		collection.update({ 'Id' : id }, {$set: { 'Situacao': situacao }}, {safe:true}, function(err, result) {
 			if (err) {
 				console.log('Error updating mesa: ' + err);
 				res.send({'error':'An error has occurred'});
