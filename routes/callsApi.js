@@ -1,9 +1,66 @@
+var mongo = require('mongodb');
+
+
+var Server = mongo.Server,
+    Db = mongo.Db,
+    BSON = mongo.BSONPure;
+	ObjectID = mongo.ObjectID;
+
+var stringConexao = "ds045628.mongolab.com";
+var portaConexao = 45628;
+
+//var server = new Server('ds045628.mongolab.com', 45628, {auto_reconnect: true});	
+var server = new Server(stringConexao, portaConexao, {auto_reconnect: true});	
+db = new Db('heroku_app18216567', server, {safe: true});	
+
+db.open(function(err, db) {
+	console.log("tentando abrir conect");
+	if(err) { return console.log("erro aqui -> " + err); }	
+	
+	console.log("Connected to 'winedb' database");
+	
+	if (stringConexao == "localhost") {		
+		console.log("MONGO Authorized");
+		db.collection('mesas', {safe:true}, function(err, collection) {
+			if (err) {
+				console.log(err);
+				console.log("The 'mesas' collection doesn't exist. Creating it with sample data...");
+				populateDB();
+			}
+		});	
+	} else {	
+		db.authenticate("arquitetaweb", "arqw3b", {}, function(err,success){
+			if (err) {
+			 console.warn("MONGO ERROR: unauthorized "+ err.message);
+			} else {
+			 console.log("MONGO Authorized");
+			db.collection('mesas', {safe:true}, function(err, collection) {
+				if (err) {
+					console.log(err);
+					console.log("The 'mesas' collection doesn't exist. Creating it with sample data...");
+					populateDB();
+				}
+			});				
+			}
+		});
+	}
+	
+});
+	
 exports.findRaiz = function(req, res) {
     res.send([{name:'Mock'}, {name:'Mock2'}, {name:'Mock3'}]);
 };
 
 exports.findById = function(req, res) {
     res.send({id:req.params.id, situacao: req.params.situacao });
+};
+
+exports.situacaomesasDb = function(req, res) {
+	db.collection('mesas', function(err, collection) {
+		collection.find().toArray(function(err, items) {
+			res.send(items);
+		});
+	});
 };
 
 exports.situacaomesas = function(req, res) {
@@ -216,29 +273,43 @@ exports.situacaomesas = function(req, res) {
 	{Id: 205, NumeroMesa: '205', Situacao: '1'}]);
 };
 
+var populateDB = function() {
+	console.log("populando db");
+    var mesas = [
+    {
+        Id: "0",
+        NumeroMesa: "1",
+        Situacao: "1"
+    },
+    {
+        Id: "1",
+        NumeroMesa: "2",
+        Situacao: "1"
+    },
+	{
+        Id: "2",
+        NumeroMesa: "3",
+        Situacao: "2"
+    },
+	{
+        Id: "3",
+        NumeroMesa: "4",
+        Situacao: "1"
+    },
+	{
+        Id: "4",
+        NumeroMesa: "5",
+        Situacao: "8"
+    },
+	{
+        Id: "5",
+        NumeroMesa: "6",
+        Situacao: "2"
+    }];
 
+    db.collection('mesas', function(err, collection) {
+		console.log("inserindo");
+        collection.insert(mesas, {safe:true}, function(err, result) {});
+    });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};
