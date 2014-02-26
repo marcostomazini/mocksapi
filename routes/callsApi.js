@@ -46,6 +46,16 @@ db.open(function(err, db) {
 	
 });
 	
+exports.findById = function(req, res) {
+	var id = req.param("id");
+	console.log('Retrieving mesa: ' + id);
+	db.collection('mesas', function(err, collection) {
+		collection.findOne({'Id': id}, function(err, item) {
+			res.send(item);
+		});
+	});
+};
+	
 exports.findRaiz = function(req, res) {
     res.send([{name:'Mock'}, {name:'Mock2'}, {name:'Mock3'}]);
 };
@@ -57,24 +67,15 @@ exports.atualizarmesa = function(req, res) {
 	var situacao = req.param("situacao");	
 	console.log('Updating mesa: ' + id + ' for situation ' + situacao);
 	db.collection('mesas', function(err, collection) {	
-	
-	
-		collection.findAndModify(
-			{Id: id}, // query
-			[['_id','asc']],  // sort order
-			{$set: {Situacao: situacao}}, // replacement, replaces only the field "hi"
-			{}, // options
-			function(err, object) {
-			  if (err){
-				  console.warn(err.message);  // returns error if no matching object found
-			  }else{
-				  console.dir(object);
-			  }
-			});
-	
-
-
-		
+		collection.update({ Id: id }, {$set: { Situacao: situacao }}, {safe:true}, function(err, result) {
+			if (err) {
+				console.log('Error updating mesa: ' + err);
+				res.send({'error':'An error has occurred'});
+			} else {
+				console.log('' + result + ' document(s) updated');
+				//res.send(mesa);
+			}
+		});
 	});
 };
 

@@ -3,6 +3,7 @@ var express = require('express'),
  
 var app = express();
 
+app.get('/api/situacaomesa/:id', wine.findById);
 app.get('/', api.findRaiz); 
 app.get('/api/situacaomesas', api.situacaomesas); // /api/situacaomesas
 
