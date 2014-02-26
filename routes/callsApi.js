@@ -71,10 +71,10 @@ exports.atualizarmesa = function(req, res) {
 				  console.dir(object);
 			  }
 			});
-		});
-
-
 	
+
+
+		
 	});
 };
 
