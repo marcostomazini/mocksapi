@@ -1,6 +1,5 @@
 var mongo = require('mongodb');
 
-
 var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
@@ -14,7 +13,7 @@ var server = new Server(stringConexao, portaConexao, {auto_reconnect: true});
 db = new Db('heroku_app22498672', server, {safe: true});	
 
 db.open(function(err, db) {
-	console.log("tentando abrir conect");
+	console.log("opening connection...");
 	if(err) { return console.log("erro aqui -> " + err); }	
 	
 	console.log("Connected to 'ArquitetaWeb MocksApi' database");
@@ -51,8 +50,26 @@ exports.findRaiz = function(req, res) {
     res.send([{name:'Mock'}, {name:'Mock2'}, {name:'Mock3'}]);
 };
 
-exports.findById = function(req, res) {
-    res.send({id:req.params.id, situacao: req.params.situacao });
+exports.atualizarmesa = function(req, res) {
+	res.send("id" + req.param("id") + " situacao:" + req.param("situacao"));
+    
+	var id = req.param("id");
+	var situacao = req.param("situacao");
+	var mesa = req.body;
+	delete mesa._id;
+	console.log('Updating mesa: ' + id);
+	console.log(JSON.stringify(mesa));
+	db.collection('itens', function(err, collection) {
+		collection.update({'_id':new BSON.ObjectID(id)}, mesa, {safe:true}, function(err, result) {
+			if (err) {
+				console.log('Error updating mesa: ' + err);
+				res.send({'error':'An error has occurred'});
+			} else {
+				console.log('' + result + ' document(s) updated');
+				res.send(mesa);
+			}
+		});
+	});
 };
 
 exports.situacaomesas = function(req, res) {
