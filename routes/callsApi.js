@@ -87,6 +87,30 @@ exports.situacaomesas = function(req, res) {
 	});
 };
 
+exports.garcom = function(req, res) {
+	db.collection('garcom', function(err, collection) {
+		collection.find().toArray(function(err, items) {
+			res.send(items);
+		});
+	});
+};
+
+exports.produtogrupo = function(req, res) {
+	db.collection('produtogrupo', function(err, collection) {
+		collection.find().toArray(function(err, items) {
+			res.send(items);
+		});
+	});
+};
+
+exports.produto = function(req, res) {
+	db.collection('produto', function(err, collection) {
+		collection.find().toArray(function(err, items) {
+			res.send(items);
+		});
+	});
+};
+
 var populateDB = function() {
 	console.log("populando db");
     var mesas = [
@@ -295,11 +319,44 @@ var populateDB = function() {
 	{Id: 202, NumeroMesa: '202', Situacao: '1'},
 	{Id: 203, NumeroMesa: '203', Situacao: '2'},
 	{Id: 204, NumeroMesa: '204', Situacao: '8'},	
-	{Id: 205, NumeroMesa: '205', Situacao: '1'}];
-
+	{Id: 205, NumeroMesa: '205', Situacao: '1'}];	
+	
     db.collection('mesas', function(err, collection) {
-		console.log("inserindo");
+		console.log("inserindo mesas");
         collection.insert(mesas, {safe:true}, function(err, result) {});
     });
+	
+	var garcom = [
+    {Id: 1, Codigo: '1', Nome: 'Garcom', Senha: '123mudarHex'},
+	{Id: 2, Codigo: '2', Nome: 'Garcom 2', Senha: '123mudarHex'},
+	{Id: 3, Codigo: '3', Nome: 'Garcom 3', Senha: '123mudarHex'},
+	{Id: 4, Codigo: '4', Nome: 'Garcom 4', Senha: '123mudarHex'}];
+	
+	db.collection('garcom', function(err, collection) {
+		console.log("inserindo garcom");
+		collection.insert(garcom, {safe:true}, function(err, result) {});
+    });
+	
+	var produtogrupo = [
+    {Id: 1, Codigo: '100', Descricao: 'Garcom', },
+	{Id: 2, Codigo: '101', Descricao: 'Garcom 2'},
+	{Id: 3, Codigo: '102', Descricao: 'Garcom 3'},
+	{Id: 4, Codigo: '103', Descricao: 'Garcom 4'}];
+	
+	db.collection('produtogrupo', function(err, collection) {
+		console.log("inserindo produtogrupo");
+		collection.insert(produtogrupo, {safe:true}, function(err, result) {});
+    });
 
+	var produto = [
+    {Id: 1, Codigo: '500', Descricao: 'Garcom', },
+	{Id: 2, Codigo: '501', Descricao: 'Garcom 2'},
+	{Id: 3, Codigo: '502', Descricao: 'Garcom 3'},
+	{Id: 4, Codigo: '503', Descricao: 'Garcom 4'}];
+	
+	db.collection('produto', function(err, collection) {
+		console.log("inserindo produto");
+		collection.insert(produto, {safe:true}, function(err, result) {});
+    });
+	
 };
