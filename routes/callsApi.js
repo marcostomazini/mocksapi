@@ -23,23 +23,48 @@ db.open(function(err, db) {
 		db.collection('mesas', {safe:true}, function(err, collection) {
 			if (err) {
 				console.log(err);
-				console.log("The 'mesas' collection doesn't exist. Creating it with sample data...");
-				populateDB();
+				console.log("The 'mesas' collection doesn't exist. Creating data...");
+				populateMesa();
 			}
 		});	
 	} else {	
 		db.authenticate("arquitetaweb", "arqw3b", {}, function(err,success){
 			if (err) {
-			 console.warn("MONGO ERROR: unauthorized "+ err.message);
+				console.warn("MONGO ERROR: unauthorized "+ err.message);
 			} else {
-			 console.log("MONGO Authorized");
-			db.collection('mesas', {safe:true}, function(err, collection) {
-				if (err) {
-					console.log(err);
-					console.log("The 'mesas' collection doesn't exist. Creating it with sample data...");
-					populateDB();
-				}
-			});				
+				console.log("MONGO Authorized");
+				db.collection('mesas', {safe:true}, function(err, collection) {
+					if (err) {
+						console.log(err);
+						console.log("The 'mesas' collection doesn't exist. Creating data...");
+						populateMesa();
+					}
+				});
+				
+				db.collection('garcom', {safe:true}, function(err, collection) {
+					if (err) {
+						console.log(err);
+						console.log("The 'garcom' collection doesn't exist. Creating data...");
+						populateGarcom();
+					}
+				});
+				
+				db.collection('produtogrupo', {safe:true}, function(err, collection) {
+					if (err) {
+						console.log(err);
+						console.log("The 'produtogrupo' collection doesn't exist. Creating data...");
+						populateProdutoGrupo();
+					}
+				});
+				
+				db.collection('produto', {safe:true}, function(err, collection) {
+					if (err) {
+						console.log(err);
+						console.log("The 'produto' collection doesn't exist. Creating data...");
+						populateProduto();
+					}
+				});
+				
 			}
 		});
 	}	
@@ -111,15 +136,16 @@ exports.produto = function(req, res) {
 	});
 };
 
-var populateDB = function() {
-	console.log("populando db");
+var populateMesa = function() {
+	console.log("populando mesas");
+	
     var mesas = [
     {Id: 0, NumeroMesa: '1', Situacao: '1'},
 	{Id: 1, NumeroMesa: '2', Situacao: '2'},
 	{Id: 2, NumeroMesa: '3', Situacao: '1'},
 	{Id: 3, NumeroMesa: '4', Situacao: '8'},
 	{Id: 4, NumeroMesa: '4A', Situacao: '1'},
-	{Id: 5, NumeroMesa: '5', Situacao: '2'},
+	{Id: 5, NumeroMesa: '5B', Situacao: '2'},
 	{Id: 6, NumeroMesa: '6', Situacao: '1'},
 	{Id: 7, NumeroMesa: '7', Situacao: '2'},
 	{Id: 8, NumeroMesa: '8', Situacao: '1'},
@@ -220,17 +246,17 @@ var populateDB = function() {
 	{Id: 103, NumeroMesa: '103', Situacao: '1'},
 	{Id: 104, NumeroMesa: '104', Situacao: '1'},
 	{Id: 105, NumeroMesa: '105', Situacao: '1'},
-	{Id: 106, NumeroMesa: '106', Situacao: '1'},	
+	{Id: 106, NumeroMesa: '106', Situacao: '1'},
 	{Id: 107, NumeroMesa: '107', Situacao: '1'},
 	{Id: 108, NumeroMesa: '108', Situacao: '2'},
 	{Id: 109, NumeroMesa: '109', Situacao: '1'},
-	{Id: 110, NumeroMesa: '110', Situacao: '2'},	
+	{Id: 110, NumeroMesa: '110', Situacao: '2'},
 	{Id: 111, NumeroMesa: '111', Situacao: '1'},
 	{Id: 112, NumeroMesa: '112', Situacao: '8'},
 	{Id: 113, NumeroMesa: '113', Situacao: '2'},
 	{Id: 114, NumeroMesa: '114', Situacao: '1'},
 	{Id: 115, NumeroMesa: '115', Situacao: '2'},
-	{Id: 116, NumeroMesa: '116', Situacao: '1'},	
+	{Id: 116, NumeroMesa: '116', Situacao: '1'},
 	{Id: 117, NumeroMesa: '117', Situacao: '2'},
 	{Id: 118, NumeroMesa: '118', Situacao: '2'},
 	{Id: 119, NumeroMesa: '119', Situacao: '1'},
@@ -240,7 +266,7 @@ var populateDB = function() {
 	{Id: 123, NumeroMesa: '123', Situacao: '2'},
 	{Id: 124, NumeroMesa: '124', Situacao: '1'},
 	{Id: 125, NumeroMesa: '125', Situacao: '2'},
-	{Id: 126, NumeroMesa: '126', Situacao: '1'},	
+	{Id: 126, NumeroMesa: '126', Situacao: '1'},
 	{Id: 127, NumeroMesa: '127', Situacao: '8'},
 	{Id: 128, NumeroMesa: '128', Situacao: '1'},
 	{Id: 129, NumeroMesa: '129', Situacao: '1'},
@@ -260,7 +286,7 @@ var populateDB = function() {
 	{Id: 143, NumeroMesa: '143', Situacao: '1'},
 	{Id: 144, NumeroMesa: '144', Situacao: '2'},
 	{Id: 145, NumeroMesa: '145', Situacao: '2'},
-	{Id: 146, NumeroMesa: '146', Situacao: '1'},	
+	{Id: 146, NumeroMesa: '146', Situacao: '1'},
 	{Id: 147, NumeroMesa: '147', Situacao: '8'},
 	{Id: 148, NumeroMesa: '148', Situacao: '1'},
 	{Id: 149, NumeroMesa: '149', Situacao: '1'},
@@ -270,7 +296,7 @@ var populateDB = function() {
 	{Id: 153, NumeroMesa: '153', Situacao: '1'},
 	{Id: 154, NumeroMesa: '154', Situacao: '1'},
 	{Id: 155, NumeroMesa: '155', Situacao: '1'},
-	{Id: 156, NumeroMesa: '156', Situacao: '1'},	
+	{Id: 156, NumeroMesa: '156', Situacao: '1'},
 	{Id: 157, NumeroMesa: '157', Situacao: '1'},
 	{Id: 158, NumeroMesa: '158', Situacao: '1'},
 	{Id: 159, NumeroMesa: '159', Situacao: '1'},
@@ -280,7 +306,7 @@ var populateDB = function() {
 	{Id: 163, NumeroMesa: '163', Situacao: '1'},
 	{Id: 164, NumeroMesa: '164', Situacao: '2'},
 	{Id: 165, NumeroMesa: '165', Situacao: '1'},
-	{Id: 166, NumeroMesa: '166', Situacao: '8'},	
+	{Id: 166, NumeroMesa: '166', Situacao: '8'},
 	{Id: 167, NumeroMesa: '167', Situacao: '1'},
 	{Id: 168, NumeroMesa: '168', Situacao: '2'},
 	{Id: 169, NumeroMesa: '169', Situacao: '2'},
@@ -290,7 +316,7 @@ var populateDB = function() {
 	{Id: 173, NumeroMesa: '173', Situacao: '2'},
 	{Id: 174, NumeroMesa: '174', Situacao: '2'},
 	{Id: 175, NumeroMesa: '175', Situacao: '1'},
-	{Id: 176, NumeroMesa: '176', Situacao: '2'},	
+	{Id: 176, NumeroMesa: '176', Situacao: '2'},
 	{Id: 177, NumeroMesa: '177', Situacao: '1'},
 	{Id: 178, NumeroMesa: '178', Situacao: '2'},
 	{Id: 179, NumeroMesa: '179', Situacao: '2'},
@@ -300,17 +326,17 @@ var populateDB = function() {
 	{Id: 183, NumeroMesa: '183', Situacao: '2'},
 	{Id: 184, NumeroMesa: '184', Situacao: '2'},
 	{Id: 185, NumeroMesa: '185', Situacao: '1'},
-	{Id: 186, NumeroMesa: '186', Situacao: '2'},	
+	{Id: 186, NumeroMesa: '186', Situacao: '2'},
 	{Id: 187, NumeroMesa: '187', Situacao: '1'},
 	{Id: 188, NumeroMesa: '188', Situacao: '2'},
 	{Id: 189, NumeroMesa: '189', Situacao: '2'},
-	{Id: 190, NumeroMesa: '190', Situacao: '8'},	
+	{Id: 190, NumeroMesa: '190', Situacao: '8'},
 	{Id: 191, NumeroMesa: '191', Situacao: '2'},
 	{Id: 192, NumeroMesa: '192', Situacao: '1'},
 	{Id: 193, NumeroMesa: '193', Situacao: '2'},
 	{Id: 194, NumeroMesa: '194', Situacao: '2'},
 	{Id: 195, NumeroMesa: '195', Situacao: '1'},
-	{Id: 196, NumeroMesa: '196', Situacao: '2'},	
+	{Id: 196, NumeroMesa: '196', Situacao: '2'},
 	{Id: 197, NumeroMesa: '197', Situacao: '1'},
 	{Id: 198, NumeroMesa: '198', Situacao: '2'},
 	{Id: 199, NumeroMesa: '199', Situacao: '2'},
@@ -318,13 +344,17 @@ var populateDB = function() {
 	{Id: 201, NumeroMesa: '201', Situacao: '2'},
 	{Id: 202, NumeroMesa: '202', Situacao: '1'},
 	{Id: 203, NumeroMesa: '203', Situacao: '2'},
-	{Id: 204, NumeroMesa: '204', Situacao: '8'},	
+	{Id: 204, NumeroMesa: '204', Situacao: '8'},
 	{Id: 205, NumeroMesa: '205', Situacao: '1'}];	
 	
     db.collection('mesas', function(err, collection) {
 		console.log("inserindo mesas");
         collection.insert(mesas, {safe:true}, function(err, result) {});
     });
+};
+
+var populateGarcom = function() {
+	console.log("populando garcom");    
 	
 	var garcom = [
     {Id: 1, Codigo: '1', Nome: 'Garcom', Senha: '123mudarHex'},
@@ -335,28 +365,35 @@ var populateDB = function() {
 	db.collection('garcom', function(err, collection) {
 		console.log("inserindo garcom");
 		collection.insert(garcom, {safe:true}, function(err, result) {});
-    });
+    });	
+};
+
+var populateProdutoGrupo = function() {
+	console.log("populando produtogrupo");    
 	
 	var produtogrupo = [
-    {Id: 1, Codigo: '100', Descricao: 'Garcom', },
-	{Id: 2, Codigo: '101', Descricao: 'Garcom 2'},
-	{Id: 3, Codigo: '102', Descricao: 'Garcom 3'},
-	{Id: 4, Codigo: '103', Descricao: 'Garcom 4'}];
+		{Id: 1, Codigo: '100', Descricao: 'Produto Grupo', },
+		{Id: 2, Codigo: '101', Descricao: 'Produto Grupo 2'},
+		{Id: 3, Codigo: '102', Descricao: 'Produto Grupo 3'},
+		{Id: 4, Codigo: '103', Descricao: 'Produto Grupo 4'}];
 	
 	db.collection('produtogrupo', function(err, collection) {
 		console.log("inserindo produtogrupo");
 		collection.insert(produtogrupo, {safe:true}, function(err, result) {});
     });
+};
+
+var populateProduto = function() {
+	console.log("populando produto");    
 
 	var produto = [
-    {Id: 1, Codigo: '500', Descricao: 'Garcom', },
-	{Id: 2, Codigo: '501', Descricao: 'Garcom 2'},
-	{Id: 3, Codigo: '502', Descricao: 'Garcom 3'},
-	{Id: 4, Codigo: '503', Descricao: 'Garcom 4'}];
+    {Id: 1, Codigo: '500', Descricao: 'Produto', },
+	{Id: 2, Codigo: '501', Descricao: 'Produto 2'},
+	{Id: 3, Codigo: '502', Descricao: 'Produto 3'},
+	{Id: 4, Codigo: '503', Descricao: 'Produto 4'}];
 	
 	db.collection('produto', function(err, collection) {
 		console.log("inserindo produto");
 		collection.insert(produto, {safe:true}, function(err, result) {});
-    });
-	
+    });	
 };
