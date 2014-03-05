@@ -83,7 +83,6 @@ exports.findById = function(req, res) {
 	console.log('Retrieving mesa: ' + id);
 	db.collection('mesas', function(err, collection) {
 		collection.findOne({'Id': parseInt(id)}, function(err, item) {
-		//collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
 			res.send("Item ---> " + item.Id);
 			console.log('Item ---> ' + item.NumeroMesa);
 			console.log('err ---> ' + err);
