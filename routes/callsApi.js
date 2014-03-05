@@ -65,6 +65,14 @@ db.open(function(err, db) {
 					}
 				});
 				
+				db.collection('consumomesa', {safe:true}, function(err, collection) {
+					if (err) {
+						console.log(err);
+						console.log("The 'consumo mesa' collection doesn't exist. Creating data...");
+						populateConsumoMesa();
+					}
+				});
+				
 			}
 		});
 	}	
@@ -100,6 +108,16 @@ exports.atualizarmesa = function(req, res) {
 				console.log('' + result + ' document(s) updated');
 				res.send(result);
 			}
+		});
+	});
+};
+
+exports.consumomesa = function(req, res) {
+	var idmesa = req.param("idmesa");
+	console.log('Retrieving consumo mesa: ' + idmesa);
+	db.collection('consumomesa', function(err, collection) {
+		collection.findOne({'MesaId': parseInt(idmesa)}, function(err, item) {
+			res.send(item);
 		});
 	});
 };
@@ -142,23 +160,23 @@ var populateMesa = function() {
     var mesas = [
     {Id: 0, NumeroMesa: '1', Situacao: '1'},
 	{Id: 1, NumeroMesa: '2', Situacao: '2'},
-	{Id: 2, NumeroMesa: '3', Situacao: '1'},
-	{Id: 3, NumeroMesa: '4', Situacao: '8'},
+	{Id: 3, NumeroMesa: '3', Situacao: '8'},
+	{Id: 2, NumeroMesa: '4', Situacao: '1'},
 	{Id: 4, NumeroMesa: '4A', Situacao: '1'},
 	{Id: 5, NumeroMesa: '5B', Situacao: '2'},
 	{Id: 6, NumeroMesa: '6', Situacao: '1'},
 	{Id: 7, NumeroMesa: '7', Situacao: '2'},
 	{Id: 8, NumeroMesa: '8', Situacao: '1'},
 	{Id: 9, NumeroMesa: '9', Situacao: '2'},
-	{Id: 10, NumeroMesa: '10', Situacao: '2'},
-	{Id: 11, NumeroMesa: '11', Situacao: '1'},
-	{Id: 12, NumeroMesa: '12', Situacao: '2'},
-	{Id: 13, NumeroMesa: '13', Situacao: '1'},
-	{Id: 14, NumeroMesa: '14', Situacao: '2'},
-	{Id: 15, NumeroMesa: '15', Situacao: '2'},
-	{Id: 16, NumeroMesa: '16', Situacao: '1'},
-	{Id: 17, NumeroMesa: '17', Situacao: '2'},
-	{Id: 18, NumeroMesa: '18', Situacao: '8'},
+	{Id: 10, NumeroMesa: '10', Situacao: '1'},
+	{Id: 11, NumeroMesa: '11', Situacao: '2'},
+	{Id: 12, NumeroMesa: '12', Situacao: '3'},
+	{Id: 13, NumeroMesa: '13', Situacao: '4'},
+	{Id: 14, NumeroMesa: '14', Situacao: '5'},
+	{Id: 15, NumeroMesa: '15', Situacao: '6'},
+	{Id: 16, NumeroMesa: '16', Situacao: '7'},
+	{Id: 17, NumeroMesa: '17', Situacao: '8'},
+	{Id: 18, NumeroMesa: '18', Situacao: '1'},
 	{Id: 19, NumeroMesa: '19', Situacao: '2'},	
 	{Id: 20, NumeroMesa: '20', Situacao: '2'},
 	{Id: 21, NumeroMesa: '21', Situacao: '1'},
@@ -403,4 +421,40 @@ var populateProduto = function() {
 		console.log("inserindo produto");
 		collection.insert(produto, {safe:true}, function(err, result) {});
     });	
+};
+
+
+var populateConsumoMesa = function() {
+	console.log("populando consumomesa");    
+	
+	var consumomesa = [
+		{MesaId: 3, DeviceId: 1, ProdutoId: 1, Quantidade: '3', DataHoraPedido: '05-03-2014T09:14:01'},
+		{MesaId: 3, DeviceId: 2, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T09:24:01'},
+		{MesaId: 3, DeviceId: 1, ProdutoId: 1, Quantidade: '1', DataHoraPedido: '05-03-2014T09:34:01'},
+		{MesaId: 3, DeviceId: 3, ProdutoId: 1, Quantidade: '4', DataHoraPedido: '05-03-2014T09:44:01'},
+		{MesaId: 3, DeviceId: 1, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T09:54:01'},
+		{MesaId: 3, DeviceId: 1, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T10:24:01'},
+		{MesaId: 3, DeviceId: 2, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T10:34:01'},
+		
+		{MesaId: 1, DeviceId: 1, ProdutoId: 1, Quantidade: '3', DataHoraPedido: '05-03-2014T09:14:01'},
+		{MesaId: 1, DeviceId: 2, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T09:24:01'},
+		{MesaId: 1, DeviceId: 1, ProdutoId: 1, Quantidade: '1', DataHoraPedido: '05-03-2014T09:34:01'},
+		{MesaId: 1, DeviceId: 3, ProdutoId: 1, Quantidade: '4', DataHoraPedido: '05-03-2014T09:44:01'},
+		
+		{MesaId: 5, DeviceId: 1, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T09:54:01'},
+		{MesaId: 5, DeviceId: 1, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T10:24:01'},
+		{MesaId: 5, DeviceId: 2, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T10:34:01'},
+		
+		{MesaId: 26, DeviceId: 1, ProdutoId: 4, Quantidade: '3', DataHoraPedido: '05-03-2014T09:14:01'},
+		{MesaId: 26, DeviceId: 2, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T09:24:01'},
+		{MesaId: 26, DeviceId: 1, ProdutoId: 4, Quantidade: '1', DataHoraPedido: '05-03-2014T09:34:01'},
+		{MesaId: 26, DeviceId: 3, ProdutoId: 1, Quantidade: '4', DataHoraPedido: '05-03-2014T09:44:01'},
+		{MesaId: 26, DeviceId: 1, ProdutoId: 3, Quantidade: '1', DataHoraPedido: '05-03-2014T09:54:01'},
+		{MesaId: 26, DeviceId: 1, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T10:24:01'},
+		{MesaId: 26, DeviceId: 2, ProdutoId: 3, Quantidade: '1', DataHoraPedido: '05-03-2014T10:34:01'}];	
+	
+	db.collection('consumomesa', function(err, collection) {
+		console.log("inserindo consumomesa");
+		collection.insert(consumomesa, {safe:true}, function(err, result) {});
+    });
 };
