@@ -116,9 +116,9 @@ exports.consumomesa = function(req, res) {
 	var idmesa = req.param("idmesa");
 	console.log('Retrieving consumo mesa: ' + idmesa);
 	db.collection('consumomesa', function(err, collection) {
-		collection.findOne({'MesaId': parseInt(idmesa)}, function(err, item) {
-			res.send(item);
-		});
+		collection.findAll({'MesaId': parseInt(idmesa)}, function(err, items) {
+			res.send(items);
+		});		
 	});
 };
 
