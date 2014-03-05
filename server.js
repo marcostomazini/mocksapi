@@ -3,9 +3,9 @@ var express = require('express'),
  
 var app = express();
 
-app.get('/api/situacaomesa/:id', api.findById);
+app.get('/api/getmesa/:id', api.findById);
 app.get('/', api.findRaiz); 
-app.get('/api/situacaomesas', api.situacaomesas); // /api/situacaomesas
+app.get('/api/getmesas', api.mesas); // /api/situacaomesas
 app.get('/api/getproduto', api.produto); // /api/GetProduto
 app.get('/api/getprodutogrupo', api.produtogrupo); // /api/GetProdutoGrupo
 app.get('/api/getgarcom', api.garcom); // /api/GetGarcom

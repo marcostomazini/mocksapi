@@ -104,7 +104,7 @@ exports.atualizarmesa = function(req, res) {
 	});
 };
 
-exports.situacaomesas = function(req, res) {
+exports.mesas = function(req, res) {
 	db.collection('mesas', function(err, collection) {
 		collection.find().toArray(function(err, items) {
 			res.send(items);
