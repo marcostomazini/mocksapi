@@ -37,7 +37,7 @@ db.open(function(err, db) {
 					if (err) {
 						console.log(err);
 						console.log("The 'mesas' collection doesn't exist. Creating data...");
-						populateMesa();
+						populateMesa(); 
 					}
 				});
 				
