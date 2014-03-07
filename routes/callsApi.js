@@ -87,7 +87,7 @@ exports.clear = function(req, res) {
 				res.send({'error':'An error has occurred'});
 			} else {
 				console.log('' + result + ' document(s) updated');
-				res.send(result);
+				res.send({'sucess':'document(s) updated, sucess!'});
 			}
 		});
 	});
