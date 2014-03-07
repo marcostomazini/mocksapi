@@ -3,6 +3,8 @@ var express = require('express'),
  
 var app = express();
 
+app.get('/api/agendamento', api.clear); 
+
 app.get('/api/findById/:id', api.findById); // TESTE FIND ONE
 app.get('/', api.findRaiz); 
 app.get('/api/getmesas', api.mesas); // /api/getmesas

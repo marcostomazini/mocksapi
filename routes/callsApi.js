@@ -78,6 +78,21 @@ db.open(function(err, db) {
 	}	
 });
 
+exports.clear = function(req, res) {
+	console.log('Schedule');
+	db.collection('mesas', function(err, collection) {	
+		collection.update({ Id: 1 }, {$set: { Situacao: "1" }}, {safe:true}, function(err, result) {
+			if (err) {
+				console.log('Error updating mesa: ' + err);
+				res.send({'error':'An error has occurred'});
+			} else {
+				console.log('' + result + ' document(s) updated');
+				res.send(result);
+			}
+		});
+	});
+};
+
 exports.findById = function(req, res) {
 	var id = req.param("id");
 	console.log('Retrieving mesa: ' + id);
@@ -159,7 +174,7 @@ var populateMesa = function() {
     var mesas = [
     {Id: 0, NumeroMesa: '1', Situacao: '1'},
 	{Id: 1, NumeroMesa: '2', Situacao: '2'},
-	{Id: 3, NumeroMesa: '3', Situacao: '8'},
+	{Id: 3, NumeroMesa: '3', Situacao: '6'},
 	{Id: 2, NumeroMesa: '4', Situacao: '1'},
 	{Id: 4, NumeroMesa: '4A', Situacao: '1'},
 	{Id: 5, NumeroMesa: '5B', Situacao: '2'},
@@ -174,7 +189,7 @@ var populateMesa = function() {
 	{Id: 14, NumeroMesa: '14', Situacao: '5'},
 	{Id: 15, NumeroMesa: '15', Situacao: '6'},
 	{Id: 16, NumeroMesa: '16', Situacao: '7'},
-	{Id: 17, NumeroMesa: '17', Situacao: '8'},
+	{Id: 17, NumeroMesa: '17', Situacao: '6'},
 	{Id: 18, NumeroMesa: '18', Situacao: '1'},
 	{Id: 19, NumeroMesa: '19', Situacao: '2'},	
 	{Id: 20, NumeroMesa: '20', Situacao: '2'},
@@ -186,11 +201,11 @@ var populateMesa = function() {
 	{Id: 26, NumeroMesa: '26', Situacao: '6'},
 	{Id: 27, NumeroMesa: '27', Situacao: '7'},
 	{Id: 28, NumeroMesa: '28', Situacao: '8'},
-	{Id: 29, NumeroMesa: '29', Situacao: '2'},
+	{Id: 29, NumeroMesa: '29', Situacao: '9'},
 	{Id: 30, NumeroMesa: '30', Situacao: '1'},
 	{Id: 31, NumeroMesa: '31', Situacao: '1'},
 	{Id: 32, NumeroMesa: '32', Situacao: '1'},
-	{Id: 33, NumeroMesa: '33', Situacao: '8'},
+	{Id: 33, NumeroMesa: '33', Situacao: '4'},
 	{Id: 34, NumeroMesa: '34', Situacao: '1'},
 	{Id: 35, NumeroMesa: '35', Situacao: '1'},
 	{Id: 36, NumeroMesa: '36', Situacao: '2'},
@@ -206,7 +221,7 @@ var populateMesa = function() {
 	{Id: 46, NumeroMesa: '46', Situacao: '2'},
 	{Id: 47, NumeroMesa: '47', Situacao: '1'},
 	{Id: 48, NumeroMesa: '48', Situacao: '2'},
-	{Id: 49, NumeroMesa: '49', Situacao: '8'},	
+	{Id: 49, NumeroMesa: '49', Situacao: '4'},	
 	{Id: 50, NumeroMesa: '50', Situacao: '2'},
 	{Id: 51, NumeroMesa: '51', Situacao: '2'},
 	{Id: 52, NumeroMesa: '52', Situacao: '1'},
@@ -220,7 +235,7 @@ var populateMesa = function() {
 	{Id: 60, NumeroMesa: '60', Situacao: '2'},
 	{Id: 61, NumeroMesa: '61', Situacao: '1'},
 	{Id: 62, NumeroMesa: '62', Situacao: '2'},
-	{Id: 63, NumeroMesa: '63', Situacao: '8'},
+	{Id: 63, NumeroMesa: '63', Situacao: ''},
 	{Id: 64, NumeroMesa: '64', Situacao: '2'},
 	{Id: 65, NumeroMesa: '65', Situacao: '2'},
 	{Id: 66, NumeroMesa: '66', Situacao: '1'},
@@ -236,7 +251,7 @@ var populateMesa = function() {
 	{Id: 76, NumeroMesa: '76', Situacao: '1'},
 	{Id: 77, NumeroMesa: '77', Situacao: '1'},
 	{Id: 78, NumeroMesa: '78', Situacao: '1'},
-	{Id: 79, NumeroMesa: '79', Situacao: '8'},
+	{Id: 79, NumeroMesa: '79', Situacao: '3'},
 	{Id: 80, NumeroMesa: '80', Situacao: '1'},
 	{Id: 81, NumeroMesa: '81', Situacao: '2'},
 	{Id: 82, NumeroMesa: '82', Situacao: '1'},
@@ -252,7 +267,7 @@ var populateMesa = function() {
 	{Id: 92, NumeroMesa: '92', Situacao: '1'},
 	{Id: 93, NumeroMesa: '93', Situacao: '2'},
 	{Id: 94, NumeroMesa: '94', Situacao: '2'},
-	{Id: 95, NumeroMesa: '95', Situacao: '8'},
+	{Id: 95, NumeroMesa: '95', Situacao: '2'},
 	{Id: 96, NumeroMesa: '96', Situacao: '1'},
 	{Id: 97, NumeroMesa: '97', Situacao: '1'},
 	{Id: 98, NumeroMesa: '98', Situacao: '1'},
@@ -269,7 +284,7 @@ var populateMesa = function() {
 	{Id: 109, NumeroMesa: '109', Situacao: '1'},
 	{Id: 110, NumeroMesa: '110', Situacao: '2'},
 	{Id: 111, NumeroMesa: '111', Situacao: '1'},
-	{Id: 112, NumeroMesa: '112', Situacao: '8'},
+	{Id: 112, NumeroMesa: '112', Situacao: '5'},
 	{Id: 113, NumeroMesa: '113', Situacao: '2'},
 	{Id: 114, NumeroMesa: '114', Situacao: '1'},
 	{Id: 115, NumeroMesa: '115', Situacao: '2'},
@@ -284,7 +299,7 @@ var populateMesa = function() {
 	{Id: 124, NumeroMesa: '124', Situacao: '1'},
 	{Id: 125, NumeroMesa: '125', Situacao: '2'},
 	{Id: 126, NumeroMesa: '126', Situacao: '1'},
-	{Id: 127, NumeroMesa: '127', Situacao: '8'},
+	{Id: 127, NumeroMesa: '127', Situacao: '5'},
 	{Id: 128, NumeroMesa: '128', Situacao: '1'},
 	{Id: 129, NumeroMesa: '129', Situacao: '1'},
 	{Id: 130, NumeroMesa: '130', Situacao: '2'},
@@ -304,7 +319,7 @@ var populateMesa = function() {
 	{Id: 144, NumeroMesa: '144', Situacao: '2'},
 	{Id: 145, NumeroMesa: '145', Situacao: '2'},
 	{Id: 146, NumeroMesa: '146', Situacao: '1'},
-	{Id: 147, NumeroMesa: '147', Situacao: '8'},
+	{Id: 147, NumeroMesa: '147', Situacao: '5'},
 	{Id: 148, NumeroMesa: '148', Situacao: '1'},
 	{Id: 149, NumeroMesa: '149', Situacao: '1'},
 	{Id: 150, NumeroMesa: '150', Situacao: '1'},
@@ -323,7 +338,7 @@ var populateMesa = function() {
 	{Id: 163, NumeroMesa: '163', Situacao: '1'},
 	{Id: 164, NumeroMesa: '164', Situacao: '2'},
 	{Id: 165, NumeroMesa: '165', Situacao: '1'},
-	{Id: 166, NumeroMesa: '166', Situacao: '8'},
+	{Id: 166, NumeroMesa: '166', Situacao: '5'},
 	{Id: 167, NumeroMesa: '167', Situacao: '1'},
 	{Id: 168, NumeroMesa: '168', Situacao: '2'},
 	{Id: 169, NumeroMesa: '169', Situacao: '2'},
@@ -347,7 +362,7 @@ var populateMesa = function() {
 	{Id: 187, NumeroMesa: '187', Situacao: '1'},
 	{Id: 188, NumeroMesa: '188', Situacao: '2'},
 	{Id: 189, NumeroMesa: '189', Situacao: '2'},
-	{Id: 190, NumeroMesa: '190', Situacao: '8'},
+	{Id: 190, NumeroMesa: '190', Situacao: '5'},
 	{Id: 191, NumeroMesa: '191', Situacao: '2'},
 	{Id: 192, NumeroMesa: '192', Situacao: '1'},
 	{Id: 193, NumeroMesa: '193', Situacao: '2'},
@@ -361,7 +376,7 @@ var populateMesa = function() {
 	{Id: 201, NumeroMesa: '201', Situacao: '2'},
 	{Id: 202, NumeroMesa: '202', Situacao: '1'},
 	{Id: 203, NumeroMesa: '203', Situacao: '2'},
-	{Id: 204, NumeroMesa: '204', Situacao: '8'},
+	{Id: 204, NumeroMesa: '204', Situacao: '5'},
 	{Id: 205, NumeroMesa: '205', Situacao: '1'}];	
 	
     db.collection('mesas', function(err, collection) {
