@@ -81,7 +81,7 @@ db.open(function(err, db) {
 exports.clear = function(req, res) {
 	console.log('Schedule');
 	db.collection('mesas', function(err, collection) {	
-		collection.update({ Id: 1 }, {$set: { Situacao: "1" }}, {safe:true}, function(err, result) {
+		collection.update({}, {$set: { Situacao: "1" }}, {safe:true, multi:true}, function(err, result) {
 			if (err) {
 				console.log('Error updating mesa: ' + err);
 				res.send({'error':'An error has occurred'});
