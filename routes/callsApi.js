@@ -126,6 +126,15 @@ exports.atualizarmesa = function(req, res) {
 	});
 };
 
+exports.addconsumomesa = function(req, res) {
+	var idmesa = req.param("idmesa");
+	console.log('Retrieving consumo mesa: ' + idmesa);
+	db.collection('consumomesa', function(err, collection) {
+		//collection.insert({'MesaId': parseInt(idmesa)});
+		collection.insert({MesaId: 2, DeviceId: 2, ProdutoId: 2, Quantidade: '1', DataHoraPedido: new Date()});		
+	});
+};
+
 exports.consumomesa = function(req, res) {
 	var idmesa = req.param("idmesa");
 	console.log('Retrieving consumo mesa: ' + idmesa);

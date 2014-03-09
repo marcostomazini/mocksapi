@@ -13,7 +13,8 @@ app.get('/api/getgarcom', api.garcom); // /api/GetGarcom
 
 app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&situacao=2
 
-app.post('/api/agendamento', api.clear); 
+app.get('/api/addconsumomesa', api.addconsumomesa);
+app.post('/api/agendamento', api.clear);
  
 app.listen(process.env.PORT || 5000);
 console.log('Listening on port 5000...');
