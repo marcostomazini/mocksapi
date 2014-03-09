@@ -131,7 +131,11 @@ exports.addconsumomesa = function(req, res) {
 	console.log('Retrieving consumo mesa: ' + idmesa);
 	db.collection('consumomesa', function(err, collection) {
 		//collection.insert({'MesaId': parseInt(idmesa)});
-		collection.insert({MesaId: 2, DeviceId: 2, ProdutoId: 2, Quantidade: '1', DataHoraPedido: new Date()});		
+		collection.insert({MesaId: parseInt(idmesa), DeviceId: 2, ProdutoId: 2, Quantidade: '1', DataHoraPedido: new Date()});	
+
+		collection.find({'MesaId': parseInt(idmesa)}).toArray(function(err, items) {
+			res.send(items);
+		});		
 	});
 };
 

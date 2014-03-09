@@ -13,7 +13,7 @@ app.get('/api/getgarcom', api.garcom); // /api/GetGarcom
 
 app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&situacao=2
 
-app.get('/api/addconsumomesa', api.addconsumomesa);
+app.get('/api/addconsumomesa/:id', api.addconsumomesa);
 app.post('/api/agendamento', api.clear);
  
 app.listen(process.env.PORT || 5000);
