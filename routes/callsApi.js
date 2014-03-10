@@ -132,6 +132,11 @@ exports.addconsumomesa = function(req, res) {
 	var idproduto = req.param("produtoid");
 	var quantidade = req.param("quantidade");
 	
+	console.log('mesaid: ' + idmesa);
+	console.log('deviceid: ' + iddevice);
+	console.log('produtoid: ' + idproduto);	
+	console.log('quantidade: ' + quantidade);
+	
 	console.log('Retrieving consumo mesa: ' + idmesa);
 	db.collection('consumomesa', function(err, collection) {
 		//collection.insert({'MesaId': parseInt(idmesa)});
