@@ -129,20 +129,21 @@ exports.atualizarmesa = function(req, res) {
 exports.addconsumomesa = function(req, res) {
 	var consumoObject = req.body;
 	console.log('Adding consumo: ' + JSON.stringify(consumoObject));
-	
-	var idmesa = req.param("mesaid"); // mesaid=1&deviceid=2&produtoid=2&quantidade=1 ou via Json Body
-	var iddevice = req.param("deviceid");
-	var idproduto = req.param("produtoid");
-	var quantidade = req.param("quantidade");	
-	
 		
+	var idmesa = req.param("MesaId"); // MesaId=1&DeviceId=2&ProdutoId=2&Quantidade=1 ou via Json Body
+	var iddevice = req.param("DeviceId"); // [{ "MesaId": 9,"DeviceId": 2, "ProdutoId": 2,  "Quantidade": "2" }]
+	var idproduto = req.param("ProdutoId");
+	var quantidade = req.param("Quantidade");		
+	var datahorapedido = req.param("DataHoraPedido");	
+			
 	console.log('mesaid: ' + idmesa);
 	console.log('deviceid: ' + iddevice);
 	console.log('produtoid: ' + idproduto);	
 	console.log('quantidade: ' + quantidade);
+	console.log('datahorapedido: ' + datahorapedido);
 	
 	db.collection('consumomesa', function(err, collection) {
-		//collection.insert({MesaId: parseInt(idmesa), DeviceId: parseInt(iddevice), ProdutoId: parseInt(idproduto), Quantidade: quantidade, DataHoraPedido: new Date()});			
+		//collection.insert({MesaId: parseInt(idmesa), DeviceId: parseInt(iddevice), ProdutoId: parseInt(idproduto), Quantidade: quantidade, DataHoraPedido: new Date()});  // via url desabilitado
 		collection.insert(consumoObject);	
 
 		collection.find({'MesaId': parseInt(idmesa)}).toArray(function(err, items) {
