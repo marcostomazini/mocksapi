@@ -11,19 +11,25 @@ app.configure(function () {
     //app.use(express.static(path.join(__dirname, 'public')));
 });
 
+// TESTES
 app.get('/api/findById/:id', api.findById); // TESTE FIND ONE
 app.get('/', api.findRaiz); 
-app.get('/api/mesas', api.mesas); // /api/getmesas
-app.get('/api/produto', api.produto); // /api/GetProduto
-app.get('/api/produtogrupo', api.produtogrupo); // /api/GetProdutoGrupo
-app.get('/api/garcom', api.garcom); // /api/GetGarcom
 
-app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&situacao=2
+// Mesas
+app.get('/api/mesas', api.mesas); // Listagem das mesas
 
-app.get('/api/mesa/:idmesa', api.getconsumomesa); // /api/getmesa/ID_MESA --- FIND ITENS (not findOne) return list objects
-app.get('/api/consumomesa/:idmesa', api.getconsumomesa); // /api/getmesa/ID_MESA --- FIND ITENS (not findOne) return list objects
-app.post('/api/consumomesa', api.addconsumomesa); // /api/addconsumomesa?mesaid=1&deviceid=2&produtoid=2&quantidade=1
+// Consumo da mesa
+app.get('/api/mesa/:idmesa', api.getconsumomesa); // Pega todo o consumo da mesaid
+app.post('/api/mesa', api.addconsumomesa); // Adiciona itens a mesa via Json Object
 
+// Sincronização
+app.get('/api/produto', api.produto); // Listagem dos produtos
+app.get('/api/produtogrupo', api.produtogrupo); // Listagem dos grupos de produto
+app.get('/api/garcom', api.garcom); // Listagem dos garçons
+
+app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&situacao=2 - via PUT URL
+
+// Limpeza Automatica dos Dados
 app.post('/api/agendamento', api.clear); // agendamento pra limpar as mesas e os consumos
 
 http.createServer(app).listen(app.get('port'), function () {
