@@ -13,6 +13,9 @@ app.get('/api/getgarcom', api.garcom); // /api/GetGarcom
 
 app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&situacao=2
 
+app.get('/api/consumomesa/:idmesa', api.consumomesa); // /api/getmesa/ID_MESA --- FIND ITENS (not findOne) return list objects
+app.post('/api/consumomesa', api.addconsumomesa); // /api/addconsumomesa?mesaid=1&deviceid=2&produtoid=2&quantidade=1
+
 app.get('/api/addconsumomesa', api.addconsumomesa); // /api/addconsumomesa?mesaid=1&deviceid=2&produtoid=2&quantidade=1
 app.post('/api/agendamento', api.clear);
  
