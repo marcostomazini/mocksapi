@@ -144,9 +144,7 @@ exports.addconsumomesa = function(req, res) {
 					res.send({'error': 'An error has occurred'});
 				} else {
 					console.log('Sucess inserted consumomesa: ' + inserted);
-					collection.find({'MesaId': parseInt(inserted.MesaId)}).toArray(function(err, items) {
-						res.send(items);
-					});
+					res.send(inserted);					
 				}		
 			});	
 		}
