@@ -127,11 +127,15 @@ exports.atualizarmesa = function(req, res) {
 };
 
 exports.addconsumomesa = function(req, res) {
-	var idmesa = req.param("idmesa");
+	var idmesa = req.param("mesaid"); // mesaid=1&deviceid=2&produtoid=2&quantidade=1
+	var iddevice = req.param("deviceid");
+	var idproduto = req.param("produtoid");
+	var quantidade = req.param("quantidade");
+	
 	console.log('Retrieving consumo mesa: ' + idmesa);
 	db.collection('consumomesa', function(err, collection) {
 		//collection.insert({'MesaId': parseInt(idmesa)});
-		collection.insert({MesaId: parseInt(idmesa), DeviceId: 2, ProdutoId: 2, Quantidade: '1', DataHoraPedido: new Date()});	
+		collection.insert({MesaId: parseInt(idmesa), DeviceId: parseInt(iddevice), ProdutoId: parseInt(idproduto), Quantidade: quantidade, DataHoraPedido: new Date()});	
 
 		collection.find({'MesaId': parseInt(idmesa)}).toArray(function(err, items) {
 			res.send(items);
