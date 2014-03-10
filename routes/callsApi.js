@@ -152,7 +152,7 @@ exports.addconsumomesa = function(req, res) {
 	});
 };
 
-exports.consumomesa = function(req, res) {
+exports.getconsumomesa = function(req, res) {
 	var idmesa = req.param("idmesa");
 	console.log('Retrieving consumo mesa: ' + idmesa);
 	db.collection('consumomesa', function(err, collection) {
