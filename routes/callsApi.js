@@ -137,10 +137,20 @@ exports.atualizarmesa = function(req, res) {
 
 exports.addconsumomesa = function(req, res) {
 	var consumoObject = req.body;
-	console.log('Consumo: ' + JSON.stringify(consumoObject));
+	var consumoStr =  JSON.stringify(consumoObject);
+	console.log('Consumo: ' +consumoStr);
 	
 	db.collection('consumomesa', function(err, collection) {
 		//collection.insert({MesaId: parseInt(idmesa), DeviceId: parseInt(iddevice), ProdutoId: parseInt(idproduto), Quantidade: quantidade, DataHoraPedido: new Date()});  // via url desabilitado		
+		
+		if (consumoStr == "{}") {
+			res.status(500);
+			url = req.url;
+			console.log('Error insert consumomesa: object invalid retry');
+			res.send({'error': 'Invalid object.'});
+			return;
+		}
+		
 		if (err) {
 			console.log('Error insert consumomesa: ' + err);
 			res.send({'error': 'An error has occurred'});
