@@ -132,7 +132,7 @@ exports.addconsumomesa = function(req, res) {
 	var idproduto = req.param("produtoid");
 	var quantidade = req.param("quantidade");
 	
-	console.log('req: ' + req);
+	//console.log('req: ' + req);
 	//console.log('parse req: ' + JSON.parse(req));
 	
 	console.log('mesaid: ' + idmesa);
