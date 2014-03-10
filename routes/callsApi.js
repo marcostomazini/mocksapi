@@ -132,17 +132,23 @@ exports.addconsumomesa = function(req, res) {
 	
 	db.collection('consumomesa', function(err, collection) {
 		//collection.insert({MesaId: parseInt(idmesa), DeviceId: parseInt(iddevice), ProdutoId: parseInt(idproduto), Quantidade: quantidade, DataHoraPedido: new Date()});  // via url desabilitado
-		collection.insert(consumoObject);
-		//collection.insert(consumoObject, function (err, inserted) {
-		//	if (err) {
-		//		console.log('Error insert consumomesa: ' + err);
-		//		res.send({'error': 'An error has occurred'});
-		//	} else {
-		//		collection.find({'MesaId': parseInt(idmesa)}).toArray(function(err, items) {
-		//			res.send(items);
-		//		});
-		//	}		
-		//});	
+		//collection.insert(consumoObject);
+		
+		if (err) {
+			console.log('Error insert consumomesa: ' + err);
+			res.send({'error': 'An error has occurred'});
+		} else {		
+			collection.insert(consumoObject, function (err, inserted) {
+				if (err) {
+					console.log('Error insert consumomesa: ' + err);
+					res.send({'error': 'An error has occurred'});
+				} else {
+					collection.find({'MesaId': parseInt(idmesa)}).toArray(function(err, items) {
+						res.send(items);
+					});
+				}		
+			});	
+		}
 	});
 };
 
