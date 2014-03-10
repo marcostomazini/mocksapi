@@ -134,7 +134,7 @@ exports.addconsumomesa = function(req, res) {
 	var idproduto = req.param("produtoid");
 	var quantidade = req.param("quantidade");
 	
-	console.log('Adding stringify: ' + JSON.stringify(req));
+	console.log('mesaid stringify: ' + req.mesaid);
 	
 	//console.log('req: ' + req);
 	//console.log('parse req: ' + JSON.parse(req));
