@@ -1,12 +1,14 @@
 var express = require('express'),
+	http = require('http'),
     api = require('./routes/callsApi');
  
 var app = express();
 
+
 app.configure(function () {
-    //app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || 3000);
     //app.use(express.logger('dev'));  /* 'default', 'short', 'tiny', 'dev' */
-    app.use(express.bodyParser()),
+    app.use(express.bodyParser());
     //app.use(express.static(path.join(__dirname, 'public')));
 });
 
@@ -25,6 +27,7 @@ app.post('/api/consumomesa', api.addconsumomesa); // /api/addconsumomesa?mesaid=
 
 app.get('/api/addconsumomesa', api.addconsumomesa); // /api/addconsumomesa?mesaid=1&deviceid=2&produtoid=2&quantidade=1
 app.post('/api/agendamento', api.clear);
- 
-app.listen(process.env.PORT || 5000);
-console.log('Listening on port 5000...');
+
+http.createServer(app).listen(app.get('port'), function () {
+    console.log("Express server listening on port " + app.get('port'));
+});
