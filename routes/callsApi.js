@@ -131,9 +131,7 @@ exports.addconsumomesa = function(req, res) {
 	console.log('Consumo: ' + JSON.stringify(consumoObject));
 	
 	db.collection('consumomesa', function(err, collection) {
-		//collection.insert({MesaId: parseInt(idmesa), DeviceId: parseInt(iddevice), ProdutoId: parseInt(idproduto), Quantidade: quantidade, DataHoraPedido: new Date()});  // via url desabilitado
-		//collection.insert(consumoObject);
-		
+		//collection.insert({MesaId: parseInt(idmesa), DeviceId: parseInt(iddevice), ProdutoId: parseInt(idproduto), Quantidade: quantidade, DataHoraPedido: new Date()});  // via url desabilitado		
 		if (err) {
 			console.log('Error insert consumomesa: ' + err);
 			res.send({'error': 'An error has occurred'});
