@@ -136,6 +136,8 @@ exports.addconsumomesa = function(req, res) {
 	console.log('Adding wine: ' + wine);
 	
 	console.log('Adding stringify: ' + JSON.stringify(wine));
+	
+	console.log('req stringify: ' + JSON.stringify(req));
 		
 	//console.log('req: ' + req);
 	//console.log('parse req: ' + JSON.parse(req));
