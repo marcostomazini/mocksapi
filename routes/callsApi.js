@@ -143,7 +143,8 @@ exports.addconsumomesa = function(req, res) {
 					console.log('Error insert consumomesa: ' + err);
 					res.send({'error': 'An error has occurred'});
 				} else {
-					collection.find({'MesaId': parseInt(idmesa)}).toArray(function(err, items) {
+					console.log('Sucess inserted consumomesa: ' + inserted);
+					collection.find({'MesaId': parseInt(inserted.MesaId)}).toArray(function(err, items) {
 						res.send(items);
 					});
 				}		
