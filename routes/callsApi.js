@@ -127,18 +127,15 @@ exports.atualizarmesa = function(req, res) {
 };
 
 exports.addconsumomesa = function(req, res) {
+	console.log('body: ' + req.body);	
+	
 	var idmesa = req.param("mesaid"); // mesaid=1&deviceid=2&produtoid=2&quantidade=1
 	var iddevice = req.param("deviceid");
 	var idproduto = req.param("produtoid");
 	var quantidade = req.param("quantidade");
 	
-	var wine = req.body;
-	console.log('Adding wine: ' + wine);
+	//console.log('Adding stringify: ' + JSON.stringify(wine));
 	
-	console.log('Adding stringify: ' + JSON.stringify(wine));
-	
-	console.log('parse stringify: ' + JSON.parse(req));
-		
 	//console.log('req: ' + req);
 	//console.log('parse req: ' + JSON.parse(req));
 	
