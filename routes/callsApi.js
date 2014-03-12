@@ -2,8 +2,9 @@ var mongo = require('mongodb');
 
 var Server = mongo.Server,
     Db = mongo.Db,
-    BSON = mongo.BSONPure;
+    BSON = mongo.BSONPure;	
 	ObjectID = mongo.ObjectID;
+	produto = require('./produtos');
 
 var stringConexao = "ds033069.mongolab.com";
 var portaConexao = 33069;
@@ -484,7 +485,7 @@ var populateProdutoGrupo = function() {
 var populateProduto = function() {
 	console.log("populando produto");    
 
-	var produto = [
+	var produto_ = [
     {Id: 1, ProdutoGrupoId: 1, Codigo: '500', Descricao: 'Produto 1'},
 	{Id: 2, ProdutoGrupoId: 1, Codigo: '501', Descricao: 'Produto 2'},
 	{Id: 3, ProdutoGrupoId: 2, Codigo: '600', Descricao: 'Produto 3'},
@@ -499,7 +500,7 @@ var populateProduto = function() {
 	
 	db.collection('produto', function(err, collection) {
 		console.log("inserindo produto");
-		collection.insert(produto, {safe:true}, function(err, result) {});
+		collection.insert(produto.data, {safe:true}, function(err, result) {});
     });	
 };
 
