@@ -28,7 +28,7 @@ exports.data = function() {
 			{Id: 26, NumeroMesa: '26', Situacao: '6'},
 			{Id: 27, NumeroMesa: '27', Situacao: '7'},
 			{Id: 28, NumeroMesa: '28', Situacao: '8'},
-			{Id: 29, NumeroMesa: '29', Situacao: '9'},
+			{Id: 29, NumeroMesa: '29', Situacao: '5'},
 			{Id: 30, NumeroMesa: '30', Situacao: '1'},
 			{Id: 31, NumeroMesa: '31', Situacao: '1'},
 			{Id: 32, NumeroMesa: '32', Situacao: '1'},
