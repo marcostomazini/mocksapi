@@ -1,7 +1,6 @@
 var express = require('express'),
 	http = require('http'),
     api = require('./routes/callsApi');
-	//produto = require('./routes/produtos');	
  
 var app = express();
 

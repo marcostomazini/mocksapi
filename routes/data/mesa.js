@@ -62,7 +62,7 @@ exports.data = function() {
 			{Id: 60, NumeroMesa: '60', Situacao: '2'},
 			{Id: 61, NumeroMesa: '61', Situacao: '1'},
 			{Id: 62, NumeroMesa: '62', Situacao: '2'},
-			{Id: 63, NumeroMesa: '63', Situacao: ''},
+			{Id: 63, NumeroMesa: '63', Situacao: '1'},
 			{Id: 64, NumeroMesa: '64', Situacao: '2'},
 			{Id: 65, NumeroMesa: '65', Situacao: '2'},
 			{Id: 66, NumeroMesa: '66', Situacao: '1'},
