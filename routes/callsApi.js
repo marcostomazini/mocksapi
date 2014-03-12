@@ -6,7 +6,7 @@ var Server = mongo.Server,
 	ObjectID = mongo.ObjectID;
 
 // DATA OBJECT
-var	grupoproduto = require('./data/grupoproduto');
+var	produtogrupo = require('./data/produtogrupo');
 	produto = require('./data/produto');
 	garcom = require('./data/garcom');	
 	mesa = require('./data/mesa');
