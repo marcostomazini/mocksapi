@@ -40,46 +40,7 @@ db.open(function(err, db) {
 				console.warn("MONGO ERROR: unauthorized "+ err.message);
 			} else {
 				console.log("MONGO Authorized");
-				db.collection('mesas', {safe:true}, function(err, collection) {
-					if (err) {
-						console.log(err);
-						console.log("The 'mesas' collection doesn't exist. Creating data...");
-						populateMesa(); 
-					}
-				});
-				
-				db.collection('garcom', {safe:true}, function(err, collection) {
-					if (err) {
-						console.log(err);
-						console.log("The 'garcom' collection doesn't exist. Creating data...");
-						populateGarcom();
-					}
-				});
-				
-				db.collection('produtogrupo', {safe:true}, function(err, collection) {
-					if (err) {
-						console.log(err);
-						console.log("The 'produtogrupo' collection doesn't exist. Creating data...");
-						populateProdutoGrupo();
-					}
-				});
-				
-				db.collection('produto', {safe:true}, function(err, collection) {
-					if (err) {
-						console.log(err);
-						console.log("The 'produto' collection doesn't exist. Creating data...");
-						populateProduto();
-					}
-				});
-				
-				db.collection('consumomesa', {safe:true}, function(err, collection) {
-					if (err) {
-						console.log(err);
-						console.log("The 'consumo mesa' collection doesn't exist. Creating data...");
-						populateConsumoMesa();
-					}
-				});
-				
+				verifyTables();				
 			}
 		});
 	}	
@@ -108,6 +69,14 @@ exports.clear = function(req, res) {
 		});
 	});
 };
+
+exports.recriar = function(req, res) {
+	db.collection('mesas').drop();
+	//verifyTables();
+	res.send({'sucess':'drop(s) sucess!'});
+};
+
+
 
 exports.findById = function(req, res) {
 	var id = req.param("id");
@@ -213,6 +182,48 @@ exports.produto = function(req, res) {
 			res.send(items);
 		});
 	});
+};
+
+verifyTables = function() {
+	db.collection('mesas', {safe:true}, function(err, collection) {
+		if (err) {
+			console.log(err);
+			console.log("The 'mesas' collection doesn't exist. Creating data...");
+			populateMesa(); 
+		}
+	});
+	
+	db.collection('garcom', {safe:true}, function(err, collection) {
+		if (err) {
+			console.log(err);
+			console.log("The 'garcom' collection doesn't exist. Creating data...");
+			populateGarcom();
+		}
+	});
+	
+	db.collection('produtogrupo', {safe:true}, function(err, collection) {
+		if (err) {
+			console.log(err);
+			console.log("The 'produtogrupo' collection doesn't exist. Creating data...");
+			populateProdutoGrupo();
+		}
+	});
+	
+	db.collection('produto', {safe:true}, function(err, collection) {
+		if (err) {
+			console.log(err);
+			console.log("The 'produto' collection doesn't exist. Creating data...");
+			populateProduto();
+		}
+	});
+	
+	db.collection('consumomesa', {safe:true}, function(err, collection) {
+		if (err) {
+			console.log(err);
+			console.log("The 'consumo mesa' collection doesn't exist. Creating data...");
+			populateConsumoMesa();
+		}
+	});	
 };
 
 var populateMesa = function() {
