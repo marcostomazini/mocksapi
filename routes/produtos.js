@@ -1,5 +1,5 @@
 var mongo = require('mongodb');
-exports.data = function(req, res) {
+exports.data = function() {
 	return [{Id: 1, ProdutoGrupoId: 1, Codigo: '500', Descricao: 'Produto T1'},
 			{Id: 2, ProdutoGrupoId: 1, Codigo: '501', Descricao: 'Produto T2'},
 			{Id: 3, ProdutoGrupoId: 2, Codigo: '600', Descricao: 'Produto T3'},
