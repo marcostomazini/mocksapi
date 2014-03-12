@@ -71,9 +71,9 @@ exports.clear = function(req, res) {
 };
 
 exports.recriar = function(req, res) {
-	db.collection('mesas').drop();
-	//verifyTables();
-	res.send({'sucess':'drop(s) sucess!'});
+	dropTables();
+	verifyTables();
+	res.send({'sucess':'recreate datatables sucess!'});
 };
 
 
@@ -184,6 +184,14 @@ exports.produto = function(req, res) {
 	});
 };
 
+dropTables = function() {
+	db.collection('mesas').drop();
+	db.collection('garcom').drop();
+	db.collection('produtogrupo').drop();
+	db.collection('produto').drop();
+	db.collection('consumomesa').drop();
+}
+
 verifyTables = function() {
 	db.collection('mesas', {safe:true}, function(err, collection) {
 		if (err) {
@@ -226,7 +234,7 @@ verifyTables = function() {
 	});	
 };
 
-var populateMesa = function() {
+populateMesa = function() {
 	console.log("populando mesas");
 	
     db.collection('mesas', function(err, collection) {
@@ -235,7 +243,7 @@ var populateMesa = function() {
     });
 };
 
-var populateGarcom = function() {
+populateGarcom = function() {
 	console.log("populando garcom");    
 	
 	db.collection('garcom', function(err, collection) {
@@ -244,7 +252,7 @@ var populateGarcom = function() {
     });	
 };
 
-var populateProdutoGrupo = function() {
+populateProdutoGrupo = function() {
 	console.log("populando produtogrupo");    
 	
 	db.collection('produtogrupo', function(err, collection) {
@@ -253,7 +261,7 @@ var populateProdutoGrupo = function() {
     });
 };
 
-var populateProduto = function() {
+populateProduto = function() {
 	console.log("populando produto");    
 
 	db.collection('produto', function(err, collection) {
@@ -263,7 +271,7 @@ var populateProduto = function() {
 };
 
 
-var populateConsumoMesa = function() {
+populateConsumoMesa = function() {
 	console.log("populando consumomesa");    
 	
 	db.collection('consumomesa', function(err, collection) {
