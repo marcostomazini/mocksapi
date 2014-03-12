@@ -5,6 +5,7 @@ var Server = mongo.Server,
     BSON = mongo.BSONPure;	
 	ObjectID = mongo.ObjectID;
 
+// DATA OBJECT
 var	grupoproduto = require('./data/grupoproduto');
 	produto = require('./data/produto');
 	garcom = require('./data/garcom');	
@@ -14,7 +15,6 @@ var	grupoproduto = require('./data/grupoproduto');
 var stringConexao = "ds033069.mongolab.com";
 var portaConexao = 33069;
 
-//var server = new Server('ds045628.mongolab.com', 45628, {auto_reconnect: true});	
 var server = new Server(stringConexao, portaConexao, {auto_reconnect: true});	
 db = new Db('heroku_app22498672', server, {safe: true});	
 
@@ -148,8 +148,6 @@ exports.addconsumomesa = function(req, res) {
 	console.log('Consumo: ' +consumoStr);
 	
 	db.collection('consumomesa', function(err, collection) {
-		//collection.insert({MesaId: parseInt(idmesa), DeviceId: parseInt(iddevice), ProdutoId: parseInt(idproduto), Quantidade: quantidade, DataHoraPedido: new Date()});  // via url desabilitado		
-		
 		if (consumoStr == "{}") {
 			res.status(500);
 			url = req.url;
