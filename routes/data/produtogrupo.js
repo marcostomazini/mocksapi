@@ -1,5 +1,5 @@
-exports.data = function() {
-	return  [{Id: 1, Codigo: '100', Descricao: 'Grupo Principal V�rios Itens'},
+﻿exports.data = function() {
+	return  [{Id: 1, Codigo: '100', Descricao: 'Grupo Principal Vários Itens'},
 			{Id: 2, Codigo: '101', Descricao: 'Produto Grupo 2'},
 			{Id: 3, Codigo: '102', Descricao: 'Produto Grupo 3'},
 			{Id: 4, Codigo: '104', Descricao: 'Produto Grupo 4'},		

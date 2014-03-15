@@ -1,10 +1,10 @@
-exports.data = function() {
+﻿exports.data = function() {
 	return [{Id: 1, ProdutoGrupoId: 1, Codigo: '501', Descricao: 'Produto 501'},
 			{Id: 2, ProdutoGrupoId: 1, Codigo: '502', Descricao: 'Produto 502'},
 			{Id: 3, ProdutoGrupoId: 2, Codigo: '503', Descricao: 'Produto 503'},
 			{Id: 4, ProdutoGrupoId: 2, Codigo: '504', Descricao: 'Produto 504'},	
 			{Id: 5, ProdutoGrupoId: 3, Codigo: '505', Descricao: 'Produto 505'},
-			{Id: 6, ProdutoGrupoId: 3, Codigo: '506', Descricao: 'Produto 506'},
+			{Id: 6, ProdutoGrupoId: 3, Codigo: '506', Descricao: 'áçéntúáção 506'},
 			{Id: 7, ProdutoGrupoId: 3, Codigo: '507', Descricao: 'Produto 507'},
 			{Id: 8, ProdutoGrupoId: 4, Codigo: '508', Descricao: 'Produto 508'},
 			{Id: 9, ProdutoGrupoId: null, Codigo: '509', Descricao: 'Produto Sem Grupo Null'},

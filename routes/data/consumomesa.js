@@ -1,4 +1,4 @@
-exports.data = function() {
+﻿exports.data = function() {
 	return [{MesaId: 3, DeviceId: 1, ProdutoId: 1, Quantidade: '3', DataHoraPedido: '05-03-2014T09:14:01'},
 			{MesaId: 3, DeviceId: 2, ProdutoId: 2, Quantidade: '1', DataHoraPedido: '05-03-2014T09:24:01'},
 			{MesaId: 3, DeviceId: 1, ProdutoId: 1, Quantidade: '1', DataHoraPedido: '05-03-2014T09:34:01'},
