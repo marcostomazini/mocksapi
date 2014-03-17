@@ -24,6 +24,7 @@ app.get('/', api.findRaiz);
 app.get('/api/mesas', api.mesas); // Listagem das mesas
 
 // Consumo da mesa
+app.get('/api/mesa/conta/:idmesa', api.getfecharconta); // Pedir para fechar conta mesaid
 app.get('/api/mesa/:idmesa', api.getconsumomesa); // Pega todo o consumo da mesaid
 app.post('/api/mesa', api.addconsumomesa); // Adiciona itens a mesa via Json Object
 

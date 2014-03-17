@@ -76,8 +76,6 @@ exports.recriar = function(req, res) {
 	res.send({'sucess':'recreate datatables sucess!'});
 };
 
-
-
 exports.findById = function(req, res) {
 	var id = req.param("id");
 	console.log('Retrieving mesa: ' + id);
@@ -139,6 +137,30 @@ exports.addconsumomesa = function(req, res) {
 				}		
 			});	
 		}
+	});
+};
+
+exports.getfecharconta = function(req, res) {
+	var idmesa = req.param("idmesa");
+	console.log('Retrieving fechar mesa: ' + idmesa);
+	db.collection('consumomesa', function(err, collection) {
+		collection.remove({'MesaId': parseInt(idmesa)}, function(err, items) {
+			if (err) {
+				console.log('Error fechar mesa: ' + err);
+				res.send({'error':'An error has occurred'});
+			} else {
+				collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '1' }}, {safe:true}, function(err, result) {
+					if (err) {
+						console.log('Error updating mesa: ' + err);
+						res.send({'error':'An error has occurred'});
+					} else {
+						var sucess = 'affected: ' + result + ' :: idmesa:'+ idmesa;
+						console.log(sucess);
+						res.send(sucess);
+					}
+				});
+			}
+		});		
 	});
 };
 
