@@ -149,15 +149,17 @@ exports.getfecharconta = function(req, res) {
 				console.log('Error fechar mesa: ' + err);
 				res.send({'error':'An error has occurred'});
 			} else {
-				collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '1' }}, {safe:true}, function(err, result) {
-					if (err) {
-						console.log('Error updating mesa: ' + err);
-						res.send({'error':'An error has occurred'});
-					} else {
-						var sucess = 'affected: ' + result + ' :: idmesa:'+ idmesa;
-						console.log(sucess);
-						res.send(sucess);
-					}
+				db.collection('mesas', function(err, collection) {
+					collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '1' }}, {safe:true}, function(err, result) {
+						if (err) {
+							console.log('Error updating mesa: ' + err);
+							res.send({'error':'An error has occurred'});
+						} else {
+							var sucess = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - sucess' : ' - error. opss...!');
+							console.log(sucess);
+							res.send(sucess);
+						}
+					});
 				});
 			}
 		});		
