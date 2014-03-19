@@ -150,7 +150,7 @@ exports.getfecharconta = function(req, res) {
 				res.send({'error':'An error has occurred'});
 			} else {
 				db.collection('mesas', function(err, collection) {
-					collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '1' }}, {safe:true}, function(err, result) {
+					collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '3' }}, {safe:true}, function(err, result) {
 						if (err) {
 							console.log('Error updating mesa: ' + err);
 							res.send({'error':'An error has occurred'});
