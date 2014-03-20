@@ -115,6 +115,8 @@ exports.addconsumomesa = function(req, res) {
 	var consumoStr =  JSON.stringify(consumoObject);
 	console.log('Consumo: ' +consumoStr);
 	console.log('MesaId: ' +idmesa);
+	console.log('MesaId2: ' +consumoObject[0]);
+	console.log('MesaId3: ' +consumoObject[0].MesaId);
 	db.collection('consumomesa', function(err, collection) {
 		if (consumoStr == "{}") {
 			res.status(500);
@@ -132,7 +134,7 @@ exports.addconsumomesa = function(req, res) {
 				if (err) {
 					console.log('Error insert consumomesa: ' + err);
 					res.send({'error': 'An error has occurred'});
-				} else {				
+				} else {									
 					db.collection('mesas', function(err, collection) {
 						collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '2' }}, {safe:true}, function(err, result) {
 							if (err) {
