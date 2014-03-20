@@ -131,7 +131,19 @@ exports.addconsumomesa = function(req, res) {
 				if (err) {
 					console.log('Error insert consumomesa: ' + err);
 					res.send({'error': 'An error has occurred'});
-				} else {
+				} else {				
+					db.collection('mesas', function(err, collection) {
+						collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '2' }}, {safe:true}, function(err, result) {
+							if (err) {
+								console.log('Error updating mesa: ' + err);
+								res.send({'error':'An error has occurred'});
+							} else {
+								var sucess = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - sucess' : ' - error. opss...!');
+								console.log(sucess);
+								res.send(sucess);
+							}
+						});
+					});
 					console.log('Sucess inserted consumomesa: ' + inserted);
 					res.send(inserted);					
 				}		
