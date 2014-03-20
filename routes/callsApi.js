@@ -166,8 +166,20 @@ exports.getfecharconta = function(req, res) {
 	});
 };
 
-exports.getconsumomesa = function(req, res) {
+exports.getconsumorecente = function(req, res) {
 	var idmesa = req.param("idmesa");
+	var qtdeRegistros = req.param("qtde");
+	console.log('Retrieving consumo mesa: ' + idmesa);
+	console.log('Retrieving consumo qtde: ' + qtdeRegistros);
+	db.collection('consumomesa', function(err, collection) {
+		collection.find({'MesaId': parseInt(idmesa)}).sort({DataHoraPedido: 1}).limit(parseInt(qtdeRegistros)).toArray(function(err, items) {		
+			res.send(items);
+		});
+	});
+};
+
+exports.getconsumomesa = function(req, res) {
+	var idmesa = req.param("idmesa");	
 	console.log('Retrieving consumo mesa: ' + idmesa);
 	db.collection('consumomesa', function(err, collection) {
 		collection.find({'MesaId': parseInt(idmesa)}).toArray(function(err, items) {
