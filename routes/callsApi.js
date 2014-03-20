@@ -172,7 +172,7 @@ exports.getconsumorecente = function(req, res) {
 	console.log('Retrieving consumo mesa: ' + idmesa);
 	console.log('Retrieving consumo qtde: ' + qtdeRegistros);
 	db.collection('consumomesa', function(err, collection) {
-		collection.find({'MesaId': parseInt(idmesa)}).sort({DataHoraPedido: 1}).limit(parseInt(qtdeRegistros)).toArray(function(err, items) {		
+		collection.find({'MesaId': parseInt(idmesa)}).sort({DataHoraPedido: -1}).limit(parseInt(qtdeRegistros)).toArray(function(err, items) {		
 			res.send(items);
 		});
 	});
