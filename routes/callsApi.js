@@ -111,9 +111,10 @@ exports.atualizarmesa = function(req, res) {
 
 exports.addconsumomesa = function(req, res) {
 	var consumoObject = req.body;
+	var idmesa = req.param("MesaId");
 	var consumoStr =  JSON.stringify(consumoObject);
 	console.log('Consumo: ' +consumoStr);
-	
+	console.log('MesaId: ' +idmesa);
 	db.collection('consumomesa', function(err, collection) {
 		if (consumoStr == "{}") {
 			res.status(500);
