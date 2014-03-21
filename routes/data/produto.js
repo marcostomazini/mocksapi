@@ -74,7 +74,9 @@
 			{Id: 66, ProdutoGrupoId: 8, Codigo: '531', Descricao: 'Espeto de Tulipa'},
 			{Id: 67, ProdutoGrupoId: 8, Codigo: '532', Descricao: 'Espeto de Linguiça'},
 			{Id: 68, ProdutoGrupoId: 8, Codigo: '533', Descricao: 'Espeto de Pão de Alho Recheado'},
-			{Id: 69, ProdutoGrupoId: 8, Codigo: '534', Descricao: 'Espeto de Kafta'}];
+			{Id: 69, ProdutoGrupoId: 8, Codigo: '534', Descricao: 'Espeto de Kafta'},
+			
+			{Id: 70, Codigo: '534', Descricao: 'Sem Grupo Definido'}];
 };               
                  
                  

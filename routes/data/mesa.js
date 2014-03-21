@@ -1,5 +1,5 @@
 ﻿exports.data = function() {
-	return  [{Id: 1,   NumeroMesa: '1',   Situacao: '1'},
+	return  [{Id: 1,   NumeroMesa: '1',   Situacao: '2'},
 			 {Id: 3,   NumeroMesa: '2',   Situacao: '1'},
 			 {Id: 2,   NumeroMesa: '3',   Situacao: '1'},
 			 {Id: 4,   NumeroMesa: '4AG', Situacao: '1'},
