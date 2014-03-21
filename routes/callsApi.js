@@ -10,6 +10,7 @@ var	produtogrupo = require('./data/produtogrupo');
 	produto = require('./data/produto');
 	garcom = require('./data/garcom');	
 	mesa = require('./data/mesa');
+	device = require('./data/device');
 	consumomesa = require('./data/consumomesa');
 
 var stringConexao = "ds033069.mongolab.com";
@@ -217,6 +218,14 @@ exports.garcom = function(req, res) {
 	});
 };
 
+exports.device = function(req, res) {
+	db.collection('device', function(err, collection) {
+		collection.find().toArray(function(err, items) {
+			res.send(items);
+		});
+	});
+};
+
 exports.produtogrupo = function(req, res) {
 	db.collection('produtogrupo', function(err, collection) {
 		collection.find().toArray(function(err, items) {
@@ -239,6 +248,7 @@ dropTables = function() {
 	db.collection('produtogrupo').drop();
 	db.collection('produto').drop();
 	db.collection('consumomesa').drop();
+	db.collection('device').drop();
 }
 
 verifyTables = function() {
@@ -280,7 +290,15 @@ verifyTables = function() {
 			console.log("The 'consumo mesa' collection doesn't exist. Creating data...");
 			populateConsumoMesa();
 		}
-	});	
+	});
+	
+	db.collection('device', {safe:true}, function(err, collection) {
+		if (err) {
+			console.log(err);
+			console.log("The 'device' collection doesn't exist. Creating data...");
+			populateDevice();
+		}
+	});
 };
 
 populateMesa = function() {
@@ -319,12 +337,20 @@ populateProduto = function() {
     });	
 };
 
-
 populateConsumoMesa = function() {
 	console.log("populando consumomesa");    
 	
 	db.collection('consumomesa', function(err, collection) {
 		console.log("inserindo consumomesa");
 		collection.insert(consumomesa.data(), {safe:true}, function(err, result) {});
+    });
+};
+
+populateDevice = function() {
+	console.log("populando device");    
+	
+	db.collection('device', function(err, collection) {
+		console.log("inserindo device");
+		collection.insert(device.data(), {safe:true}, function(err, result) {});
     });
 };
