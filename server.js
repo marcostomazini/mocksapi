@@ -39,7 +39,7 @@ app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&sit
 // Limpeza Automatica dos Dados
 app.post('/api/agendamento', api.clear); // agendamento pra limpar as mesas e os consumos
 
-app.get('/api/recriar', api.recriar); // recriar tabelas
+app.get('/api/recreate', api.recriar); // recriar tabelas
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log("Express server listening on port " + app.get('port'));
