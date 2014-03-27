@@ -110,13 +110,13 @@ exports.clear = function(req, res) {
 		collection.update({}, {$set: { Situacao: "1" }}, {safe:true, multi:true}, function(err, result) {
 			if (err) {
 				console.log('Error updating mesa: ' + err);
-				res.send({'error':'An error has occurred'});
+				res.send(500, {'error':'An error has occurred'});
 			} else {						
 				db.collection('consumomesa', function(err, collection) {
 					collection.drop(function(err, result) {			
 						if (err) {
 							console.log('Error drop mesa: ' + err);
-							res.send({'error':'An error has occurred'});
+							res.send(500, {'error':'An error has occurred'});
 						} else {
 							console.log('' + result + ' document(s) updated');
 							res.send({'success':'document(s) updated, success!'});
@@ -158,7 +158,7 @@ exports.atualizarmesa = function(req, res) {
 		collection.update({ Id: parseInt(id) }, {$set: { Situacao: situacao }}, {safe:true}, function(err, result) {
 			if (err) {
 				console.log('Error updating mesa: ' + err);
-				res.send({'error':'An error has occurred'});
+				res.send(500, {'error':'An error has occurred'});
 			} else {
 				console.log('' + result + ' document(s) updated');
 				res.send(result);
@@ -174,28 +174,26 @@ exports.addconsumomesa = function(req, res) {
 	console.log('MesaId: ' +consumoObject[0].MesaId);
 	db.collection('consumomesa', function(err, collection) {
 		if (consumoStr == "{}") {
-			res.status(500);
-			url = req.url;
 			console.log('Error insert consumomesa: object invalid retry');
-			res.send({'error': 'Invalid object.'});
+			res.send(500, {'error': 'Invalid object.'});
 			return;
 		}
 		
 		if (err) {
 			console.log('Error insert consumomesa: ' + err);
-			res.send({'error': 'An error has occurred'});
+			res.send(500, {'error': 'An error has occurred'});
 		} else {		
 			collection.insert(consumoObject, function (err, inserted) {
 				if (err) {
 					console.log('Error insert consumomesa: ' + err);
-					res.send({'error': 'An error has occurred'});
+					res.send(500, {'error': 'An error has occurred'});
 				} else {									
 					var idmesa = consumoObject[0].MesaId;
 					db.collection('mesas', function(err, collection) {
 						collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '2' }}, {safe:true}, function(err, result) {
 							if (err) {
 								console.log('Error updating mesa: ' + err);
-								res.send({'error':'An error has occurred'});
+								res.send(500, {'error':'An error has occurred'});
 							} else {
 								var success = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - success' : ' - error. opss...!');
 								console.log(success);
@@ -218,7 +216,7 @@ exports.getfecharconta = function(req, res) {
 		collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '3' }}, {safe:true}, function(err, result) {
 			if (err) {
 				console.log('Error updating mesa: ' + err);
-				res.send({'error':'An error has occurred'});
+				res.send(500, {'error':'An error has occurred'});
 			} else {
 				var success = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - success' : ' - error. opss...!');
 				console.log(success);
@@ -258,9 +256,9 @@ exports.liberarUsuario = function(req, res) {
 		collection.update({'Nome': email, 'DeviceID': deviceID}, {$set: { Verificado: true }}, {safe:true, multi:true}, function(err, result) {
 			if (err) {
 				console.log('Error updating device: ' + err);
-				res.send({'error':'An error has occurred'});
+				res.send(500, {'error':'An error has occurred'});
 			} else {						
-				res.send({'success':'document(s) updated, success!'});				
+				res.send({'success':'user is authorized'});				
 			}
 		});
 	});
