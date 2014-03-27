@@ -33,12 +33,12 @@ app.post('/api/mesa', api.addconsumomesa); // Adiciona itens a mesa via Json Obj
 app.get('/api/produto', api.produto); // Listagem dos produtos
 app.get('/api/produtogrupo', api.produtogrupo); // Listagem dos grupos de produto
 app.get('/api/garcom', api.garcom); // Listagem dos garçons
-app.get('/api/device', api.device); // Listagem dos device
 
 app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&situacao=2 - via PUT URL
 
 // Limpeza Automatica dos Dados
 app.post('/api/agendamento', api.clear); // agendamento pra limpar as mesas e os consumos
+app.post('/api/device', api.device); // Listagem dos device
 
 app.get('/api/recreate', api.recriar); // recriar tabelas
 

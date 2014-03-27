@@ -62,7 +62,7 @@ exports.clear = function(req, res) {
 							res.send({'error':'An error has occurred'});
 						} else {
 							console.log('' + result + ' document(s) updated');
-							res.send({'sucess':'document(s) updated, sucess!'});
+							res.send({'success':'document(s) updated, success!'});
 						}
 					});
 				});				
@@ -74,7 +74,7 @@ exports.clear = function(req, res) {
 exports.recriar = function(req, res) {
 	dropTables();
 	verifyTables();
-	res.send({'sucess':'recreate datatables sucess!'});
+	res.send({'success':'recreate datatables success!'});
 };
 
 exports.findById = function(req, res) {
@@ -140,13 +140,13 @@ exports.addconsumomesa = function(req, res) {
 								console.log('Error updating mesa: ' + err);
 								res.send({'error':'An error has occurred'});
 							} else {
-								var sucess = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - sucess' : ' - error. opss...!');
-								console.log(sucess);
-								res.send(sucess);
+								var success = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - success' : ' - error. opss...!');
+								console.log(success);
+								res.send(success);
 							}
 						});
 					});
-					console.log('Sucess inserted consumomesa: ' + inserted);
+					console.log('success inserted consumomesa: ' + inserted);
 					res.send(inserted);					
 				}		
 			});	
@@ -163,9 +163,9 @@ exports.getfecharconta = function(req, res) {
 				console.log('Error updating mesa: ' + err);
 				res.send({'error':'An error has occurred'});
 			} else {
-				var sucess = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - sucess' : ' - error. opss...!');
-				console.log(sucess);
-				res.send(sucess);
+				var success = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - success' : ' - error. opss...!');
+				console.log(success);
+				res.send(success);
 			}
 		});
 	});
@@ -190,6 +190,40 @@ exports.getfecharconta = function(req, res) {
 			}
 		});		
 	});*/
+};
+
+exports.device = function(req, res) {
+	var objectDevice = req.body;	
+
+	var email = objectDevice.Nome;
+	var deviceID = objectDevice.DeviceID;
+	console.log('Retrieving email: ' + email);
+	console.log('Retrieving deviceID: ' + deviceID);
+	
+	db.collection('device', function(err, collection) {
+		collection.findOne({'Nome': email, 'DeviceID': deviceID}, function(err, item) {
+			if (item != null) {
+				if (item.Verificado) {
+					console.log('user authorized');
+					res.send({'success': "user authorized"});
+				} else {
+					console.log('user not authorized');
+					res.send(500, {'error': "user not authorized"});
+				}
+			} else {			
+				objectDevice.Verificado = false;
+				collection.insert(objectDevice, function (err, inserted) {
+					if (err) {
+						console.log('error insert device: ' + err);
+						res.send(500, {'error': 'an error has occurred'});
+					} else {									
+						console.log('success inserted device - Nome: ' + inserted[0].Nome +  ' DeviceID: ' +inserted[0].DeviceID );
+						res.send({'success': "user inserted, sent an email confirmation to " + inserted[0].Nome });
+					}		
+				});	
+			}
+		});
+	});	
 };
 
 exports.getconsumorecente = function(req, res) {
@@ -224,14 +258,6 @@ exports.mesas = function(req, res) {
 
 exports.garcom = function(req, res) {
 	db.collection('garcom', function(err, collection) {
-		collection.find().toArray(function(err, items) {
-			res.send(items);
-		});
-	});
-};
-
-exports.device = function(req, res) {
-	db.collection('device', function(err, collection) {
 		collection.find().toArray(function(err, items) {
 			res.send(items);
 		});
