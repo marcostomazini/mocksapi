@@ -7,13 +7,18 @@ var Server = mongo.Server,
 	ObjectID = mongo.ObjectID;
 
 var smtpTransport = nodemailer.createTransport("SMTP", {
-    host: "mail.arquitetaweb.com", // hostname
+	service: "Gmail",
+    auth: {
+        user: "arquitetaweb@gmail.com",
+        pass: "marc0secinti4"
+    }
+    /*host: "mail.arquitetaweb.com", // hostname
     secureConnection: true, // use SSL
     port: 465, // port for secure SMTP
     auth: {
         user: "tomazini@arquitetaweb.com",
         pass: "cint!4"
-    }	
+    }*/
 });
 
 sendEmailToConfirmation = function(email) {
