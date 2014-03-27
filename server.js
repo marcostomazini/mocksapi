@@ -41,7 +41,7 @@ app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&sit
 
 // Limpeza Automatica dos Dados
 app.post('/api/agendamento', api.clear); // agendamento pra limpar as mesas e os consumos
-app.post('/api/device', api.device); // Listagem dos device
+app.post('/api/device', api.device); // cadastro do device
 
 app.get('/api/recreate', api.recriar); // recriar tabelas
 
