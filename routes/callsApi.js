@@ -1,4 +1,4 @@
-var mongo = require('mongodb');
+ï»¿var mongo = require('mongodb');
 var nodemailer = require("nodemailer");
 
 var Server = mongo.Server,
@@ -7,13 +7,13 @@ var Server = mongo.Server,
 	ObjectID = mongo.ObjectID;
 
 var smtpTransport = nodemailer.createTransport("SMTP", {
-    host: "hserv22.homehost.com.br", // hostname
-    secureConnection: false, // use SSL
+    host: "mail.arquitetaweb.com", // hostname
+    secureConnection: true, // use SSL
     port: 465, // port for secure SMTP
     auth: {
         user: "tomazini@arquitetaweb.com",
         pass: "cint!4"
-    }
+    }	
 });
 
 sendEmailToConfirmation = function(email) {
@@ -21,7 +21,7 @@ sendEmailToConfirmation = function(email) {
 	var mailOptions = {
         from: "AComanda <tomazini@arquitetaweb.com>", // sender address
         to: email, // list of receivers
-        subject: "AComanda - ArquitetaWeb Instalação", 
+        subject: "AComanda - ArquitetaWeb InstalaÃ§Ã£o", 
         html: '<b>Signup Confirmation ?</b><br />'
 				+ 'Your email account is : ' + email + '<br />'
 				+ '<a href=\"'+ textLink.toString() + '\">Click here to activate your account.</a>'
