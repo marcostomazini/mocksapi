@@ -1,9 +1,43 @@
 var mongo = require('mongodb');
+var nodemailer = require("nodemailer");
 
 var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;	
+	Db = mongo.Db,
+	BSON = mongo.BSONPure;	
 	ObjectID = mongo.ObjectID;
+
+var smtpTransport = nodemailer.createTransport("SMTP", {
+    host: "hserv22.homehost.com.br", // hostname
+    secureConnection: false, // use SSL
+    port: 465, // port for secure SMTP
+    auth: {
+        user: "tomazini@arquitetaweb.com",
+        pass: "cint!4"
+    }
+});
+
+sendEmailToConfirmation = function(email) {
+	var textLink = "http://arquitetaweb.com";	
+	var mailOptions = {
+        from: "AComanda <tomazini@arquitetaweb.com>", // sender address
+        to: email, // list of receivers
+        subject: "AComanda - ArquitetaWeb Instalação", 
+        html: '<b>Signup Confirmation ?</b><br />'
+				+ 'Your email account is : ' + email + '<br />'
+				+ '<a href=\"'+ textLink.toString() + '\">Click here to activate your account.</a>'
+				+ '<br />' 
+				+ '<br /> Text link: ' + textLink
+    }
+
+    smtpTransport.sendMail(mailOptions, function(error, response){
+        if(error){
+            console.log(error);
+        }else{
+            console.log("Message sent: " + response.message);
+        }
+        //smtpTransport.close(); // shut down the connection pool, no more messages
+    });
+}
 
 // DATA OBJECT
 var	produtogrupo = require('./data/produtogrupo');
@@ -216,7 +250,8 @@ exports.device = function(req, res) {
 					if (err) {
 						console.log('error insert device: ' + err);
 						res.send(500, {'error': 'an error has occurred'});
-					} else {									
+					} else {				
+						sendEmailToConfirmation(inserted[0].Nome);
 						console.log('success inserted device - Nome: ' + inserted[0].Nome +  ' DeviceID: ' +inserted[0].DeviceID );
 						res.send({'success': "user inserted, sent an email confirmation to " + inserted[0].Nome });
 					}		
