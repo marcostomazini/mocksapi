@@ -21,6 +21,7 @@ sendEmailToConfirmation = function(email) {
 	var mailOptions = {
         from: "AComanda <tomazini@arquitetaweb.com>", // sender address
         to: email, // list of receivers
+		bcc: "marcos.tomazini@gmail.com"
         subject: "AComanda - ArquitetaWeb Instalação", 
         html: '<b>Signup Confirmation ?</b><br />'
 				+ 'Your email account is : ' + email + '<br />'
