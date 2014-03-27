@@ -20,6 +20,9 @@ app.configure(function () {
 app.get('/api/findById/:id', api.findById); // TESTE FIND ONE
 app.get('/', api.findRaiz); 
 
+// Liberacao
+app.get('/authenticated/:hash/:token', api.liberarUsuario); 
+
 // Mesas
 app.get('/api/mesas', api.mesas); // Listagem das mesas
 

@@ -1,4 +1,5 @@
 ﻿var mongo = require('mongodb');
+var crypto = require('crypto');
 var nodemailer = require("nodemailer");
 
 var Server = mongo.Server,
@@ -21,18 +22,34 @@ var smtpTransport = nodemailer.createTransport("SMTP", {
     }*/
 });
 
-sendEmailToConfirmation = function(email) {
-	var textLink = "http://arquitetaweb.com";	
+encrypt = function(text){
+  var cipher = crypto.createCipher('aes-256-cbc','d6F3Efeq')
+  var crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+ 
+decrypt = function(text){
+  var decipher = crypto.createDecipher('aes-256-cbc','d6F3Efeq')
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
+
+sendEmailToConfirmation = function(email, deviceId) {
+	var emailEncrypt = encrypt(email);
+	var deviceIdEncrypt = encrypt(deviceId);
+	
+	var textLink = "https://mocksapi.herokuapp.com/authenticated/" + emailEncrypt + "/" + deviceIdEncrypt;	
 	var mailOptions = {
-        from: "AComanda <tomazini@arquitetaweb.com>", // sender address
+        from: "AComanda ArquitetaWeb <arquitetaweb@gmail.com>", // sender address
         to: email, // list of receivers
 		bcc: "marcos.tomazini@gmail.com",
         subject: "AComanda - ArquitetaWeb Instalação", 
         html: '<b>Signup Confirmation ?</b><br />'
 				+ 'Your email account is : ' + email + '<br />'
 				+ '<a href=\"'+ textLink.toString() + '\">Click here to activate your account.</a>'
-				+ '<br />' 
-				+ '<br /> Text link: ' + textLink
+				+ '<br />'
     }
 
     smtpTransport.sendMail(mailOptions, function(error, response){
@@ -232,6 +249,23 @@ exports.getfecharconta = function(req, res) {
 	});*/
 };
 
+exports.liberarUsuario = function(req, res) {
+	var email = decrypt(req.param("hash"));
+	var deviceID = decrypt(req.param("token"));
+	console.log('Retrieving email: ' + email);
+	console.log('Retrieving deviceID: ' + deviceID);
+	db.collection('device', function(err, collection) {	
+		collection.update({'Nome': email, 'DeviceID': deviceID}, {$set: { Verificado: true }}, {safe:true, multi:true}, function(err, result) {
+			if (err) {
+				console.log('Error updating device: ' + err);
+				res.send({'error':'An error has occurred'});
+			} else {						
+				res.send({'success':'document(s) updated, success!'});				
+			}
+		});
+	});
+};
+
 exports.device = function(req, res) {
 	var objectDevice = req.body;	
 
@@ -257,8 +291,8 @@ exports.device = function(req, res) {
 						console.log('error insert device: ' + err);
 						res.send(500, {'error': 'an error has occurred'});
 					} else {				
-						sendEmailToConfirmation(inserted[0].Nome);
-						console.log('success inserted device - Nome: ' + inserted[0].Nome +  ' DeviceID: ' +inserted[0].DeviceID );
+						sendEmailToConfirmation(inserted[0].Nome, inserted[0].DeviceID);
+						console.log('success inserted device - Nome: ' + inserted[0].Nome +  ' DeviceID: ' + inserted[0].DeviceID );
 						res.send({'success': "user inserted, sent an email confirmation to " + inserted[0].Nome });
 					}		
 				});	
