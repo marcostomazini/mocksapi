@@ -1,4 +1,5 @@
 var express = require('express'),
+	path = require('path'),
 	http = require('http'),
     api = require('./routes/callsApi');
  
@@ -12,8 +13,7 @@ app.configure(function () {
 	
 	app.use(express.json());
 	app.use(express.urlencoded());
-
-    //app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express.static(path.join(__dirname, 'public')));
 });
 
 // TESTES
