@@ -19,7 +19,7 @@ app.configure(function () {
 // TESTES
 app.get('/api/findById/:id', api.findById); // TESTE FIND ONE
 app.get('/', api.findRaiz); 
-
+ 
 // Mesas
 app.get('/api/mesas', api.mesas); // Listagem das mesas
 
