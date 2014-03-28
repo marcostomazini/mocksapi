@@ -1,9 +1,66 @@
-var mongo = require('mongodb');
+﻿var mongo = require('mongodb');
+var crypto = require('crypto');
+var nodemailer = require("nodemailer");
 
 var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;	
+	Db = mongo.Db,
+	BSON = mongo.BSONPure;	
 	ObjectID = mongo.ObjectID;
+
+var smtpTransport = nodemailer.createTransport("SMTP", {
+	service: "Gmail",
+    auth: {
+        user: "arquitetaweb@gmail.com",
+        pass: "marc0secinti4"
+    }
+    /*host: "mail.arquitetaweb.com", // hostname
+    secureConnection: true, // use SSL
+    port: 465, // port for secure SMTP
+    auth: {
+        user: "tomazini@arquitetaweb.com",
+        pass: "cint!4"
+    }*/
+});
+
+encrypt = function(text){
+  var cipher = crypto.createCipher('aes-256-cbc','d6F3Efeq')
+  var crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+ 
+decrypt = function(text){
+  var decipher = crypto.createDecipher('aes-256-cbc','d6F3Efeq')
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
+
+sendEmailToConfirmation = function(email, deviceId) {
+	var emailEncrypt = encrypt(email);
+	var deviceIdEncrypt = encrypt(deviceId);
+	
+	var textLink = "https://mocksapi.herokuapp.com/authenticated/" + emailEncrypt + "/" + deviceIdEncrypt;	
+	var mailOptions = {
+        from: "AComanda ArquitetaWeb <arquitetaweb@gmail.com>", // sender address
+        to: email, // list of receivers
+		bcc: "marcos.tomazini@gmail.com",
+        subject: "AComanda - ArquitetaWeb Instalação", 
+        html: '<b>Signup Confirmation ?</b><br />'
+				+ 'Your email account is : ' + email + '<br />'
+				+ '<a href=\"'+ textLink.toString() + '\">Click here to activate your account.</a>'
+				+ '<br />'
+    }
+
+    smtpTransport.sendMail(mailOptions, function(error, response){
+        if(error){
+            console.log(error);
+        }else{
+            console.log("Message sent: " + response.message);
+        }
+        //smtpTransport.close(); // shut down the connection pool, no more messages
+    });
+}
 
 // DATA OBJECT
 var	produtogrupo = require('./data/produtogrupo');
@@ -53,16 +110,16 @@ exports.clear = function(req, res) {
 		collection.update({}, {$set: { Situacao: "1" }}, {safe:true, multi:true}, function(err, result) {
 			if (err) {
 				console.log('Error updating mesa: ' + err);
-				res.send({'error':'An error has occurred'});
+				res.send(500, {'error':'An error has occurred'});
 			} else {						
 				db.collection('consumomesa', function(err, collection) {
 					collection.drop(function(err, result) {			
 						if (err) {
 							console.log('Error drop mesa: ' + err);
-							res.send({'error':'An error has occurred'});
+							res.send(500, {'error':'An error has occurred'});
 						} else {
 							console.log('' + result + ' document(s) updated');
-							res.send({'sucess':'document(s) updated, sucess!'});
+							res.send({'success':'document(s) updated, success!'});
 						}
 					});
 				});				
@@ -74,7 +131,7 @@ exports.clear = function(req, res) {
 exports.recriar = function(req, res) {
 	dropTables();
 	verifyTables();
-	res.send({'sucess':'recreate datatables sucess!'});
+	res.send({'success':'recreate datatables success!'});
 };
 
 exports.findById = function(req, res) {
@@ -101,7 +158,7 @@ exports.atualizarmesa = function(req, res) {
 		collection.update({ Id: parseInt(id) }, {$set: { Situacao: situacao }}, {safe:true}, function(err, result) {
 			if (err) {
 				console.log('Error updating mesa: ' + err);
-				res.send({'error':'An error has occurred'});
+				res.send(500, {'error':'An error has occurred'});
 			} else {
 				console.log('' + result + ' document(s) updated');
 				res.send(result);
@@ -117,36 +174,34 @@ exports.addconsumomesa = function(req, res) {
 	console.log('MesaId: ' +consumoObject[0].MesaId);
 	db.collection('consumomesa', function(err, collection) {
 		if (consumoStr == "{}") {
-			res.status(500);
-			url = req.url;
 			console.log('Error insert consumomesa: object invalid retry');
-			res.send({'error': 'Invalid object.'});
+			res.send(500, {'error': 'Invalid object.'});
 			return;
 		}
 		
 		if (err) {
 			console.log('Error insert consumomesa: ' + err);
-			res.send({'error': 'An error has occurred'});
+			res.send(500, {'error': 'An error has occurred'});
 		} else {		
 			collection.insert(consumoObject, function (err, inserted) {
 				if (err) {
 					console.log('Error insert consumomesa: ' + err);
-					res.send({'error': 'An error has occurred'});
+					res.send(500, {'error': 'An error has occurred'});
 				} else {									
 					var idmesa = consumoObject[0].MesaId;
 					db.collection('mesas', function(err, collection) {
 						collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '2' }}, {safe:true}, function(err, result) {
 							if (err) {
 								console.log('Error updating mesa: ' + err);
-								res.send({'error':'An error has occurred'});
+								res.send(500, {'error':'An error has occurred'});
 							} else {
-								var sucess = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - sucess' : ' - error. opss...!');
-								console.log(sucess);
-								res.send(sucess);
+								var success = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - success' : ' - error. opss...!');
+								console.log(success);
+								res.send(success);
 							}
 						});
 					});
-					console.log('Sucess inserted consumomesa: ' + inserted);
+					console.log('success inserted consumomesa: ' + inserted);
 					res.send(inserted);					
 				}		
 			});	
@@ -161,11 +216,11 @@ exports.getfecharconta = function(req, res) {
 		collection.update({ Id: parseInt(idmesa) }, {$set: { Situacao: '3' }}, {safe:true}, function(err, result) {
 			if (err) {
 				console.log('Error updating mesa: ' + err);
-				res.send({'error':'An error has occurred'});
+				res.send(500, {'error':'An error has occurred'});
 			} else {
-				var sucess = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - sucess' : ' - error. opss...!');
-				console.log(sucess);
-				res.send(sucess);
+				var success = 'affected: ' + result + ' :: idmesa: '+ idmesa + ((result > 0) ? ' - success' : ' - error. opss...!');
+				console.log(success);
+				res.send(success);
 			}
 		});
 	});
@@ -190,6 +245,58 @@ exports.getfecharconta = function(req, res) {
 			}
 		});		
 	});*/
+};
+
+exports.liberarUsuario = function(req, res) {
+	var email = decrypt(req.param("hash"));
+	var deviceID = decrypt(req.param("token"));
+	console.log('Retrieving email: ' + email);
+	console.log('Retrieving deviceID: ' + deviceID);
+	db.collection('device', function(err, collection) {	
+		collection.update({'Nome': email, 'DeviceID': deviceID}, {$set: { Verificado: true }}, {safe:true, multi:true}, function(err, result) {
+			if (err) {
+				console.log('Error updating device: ' + err);
+				res.send(500, {'error':'An error has occurred'});
+			} else {						
+				res.send({'success':'user is authorized'});				
+			}
+		});
+	});
+};
+
+exports.device = function(req, res) {
+	var objectDevice = req.body;	
+
+	var email = objectDevice.Nome;
+	var deviceID = objectDevice.DeviceID;
+	console.log('Retrieving email: ' + email);
+	console.log('Retrieving deviceID: ' + deviceID);
+	
+	db.collection('device', function(err, collection) {
+		collection.findOne({'Nome': email, 'DeviceID': deviceID}, function(err, item) {
+			if (item != null) {
+				if (item.Verificado) {
+					console.log('user authorized');
+					res.send({'success': "user authorized"});
+				} else {
+					console.log('user not authorized');
+					res.send(500, {'error': "user not authorized"});
+				}
+			} else {			
+				objectDevice.Verificado = false;
+				collection.insert(objectDevice, function (err, inserted) {
+					if (err) {
+						console.log('error insert device: ' + err);
+						res.send(500, {'error': 'an error has occurred'});
+					} else {				
+						sendEmailToConfirmation(inserted[0].Nome, inserted[0].DeviceID);
+						console.log('success inserted device - Nome: ' + inserted[0].Nome +  ' DeviceID: ' + inserted[0].DeviceID );
+						res.send({'success': "user inserted, sent an email confirmation to " + inserted[0].Nome });
+					}		
+				});	
+			}
+		});
+	});	
 };
 
 exports.getconsumorecente = function(req, res) {
@@ -224,14 +331,6 @@ exports.mesas = function(req, res) {
 
 exports.garcom = function(req, res) {
 	db.collection('garcom', function(err, collection) {
-		collection.find().toArray(function(err, items) {
-			res.send(items);
-		});
-	});
-};
-
-exports.device = function(req, res) {
-	db.collection('device', function(err, collection) {
 		collection.find().toArray(function(err, items) {
 			res.send(items);
 		});

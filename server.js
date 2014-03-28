@@ -1,5 +1,4 @@
 var express = require('express'),
-	path = require('path'),
 	http = require('http'),
     api = require('./routes/callsApi');
  
@@ -13,13 +12,14 @@ app.configure(function () {
 	
 	app.use(express.json());
 	app.use(express.urlencoded());
-    app.use(express.static(path.join(__dirname, 'public')));
+
+    //app.use(express.static(path.join(__dirname, 'public')));
 });
 
 // TESTES
 app.get('/api/findById/:id', api.findById); // TESTE FIND ONE
 app.get('/', api.findRaiz); 
- 
+
 // Mesas
 app.get('/api/mesas', api.mesas); // Listagem das mesas
 
@@ -30,14 +30,15 @@ app.get('/api/mesa/:idmesa/:qtde', api.getconsumorecente); // Pega todo o consum
 app.post('/api/mesa', api.addconsumomesa); // Adiciona itens a mesa via Json Object
 
 // Sincronização
+app.get('/authenticated/:hash/:token', api.liberarUsuario); 
 app.get('/api/produto', api.produto); // Listagem dos produtos
 app.get('/api/produtogrupo', api.produtogrupo); // Listagem dos grupos de produto
 app.get('/api/garcom', api.garcom); // Listagem dos garçons
-app.get('/api/device', api.device); // Listagem dos device
 
 app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&situacao=2 - via PUT URL
 
 // Limpeza Automatica dos Dados
+app.post('/api/device', api.device); // Listagem dos device
 app.post('/api/agendamento', api.clear); // agendamento pra limpar as mesas e os consumos
 
 app.get('/api/recreate', api.recriar); // recriar tabelas
