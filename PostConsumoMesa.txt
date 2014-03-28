@@ -9,3 +9,17 @@ Content-Length: 217
 
 [{"MesaId": 12, "DeviceId": 2, "ProdutoId": 2, "Quantidade": "21", "DataHoraPedido": "05-03-2014T15:24:01"},
 {"MesaId": 12, "DeviceId": 1, "ProdutoId": 2, "Quantidade": "11", "DataHoraPedido": "05-03-2014T14:24:01"}]
+
+
+
+
+POST
+https://mocksapi.herokuapp.com/api/device
+
+User-Agent: Fiddler
+Host: mocksapi.herokuapp.com
+Content-Type: application/json; charset=utf-8
+Content-Length: 63
+
+
+ {"Nome": "thiago@publisoft.com.br", "DeviceID": "HexAparelho"}
