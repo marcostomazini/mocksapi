@@ -280,6 +280,7 @@ exports.device = function(req, res) {
 					res.send({'success': "user authorized"});
 				} else {
 					console.log('user not authorized');
+					sendEmailToConfirmation(item.Nome, item.DeviceID);
 					res.send(401, {'error': "user not authorized"});
 				}
 			} else {			

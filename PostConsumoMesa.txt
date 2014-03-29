@@ -23,3 +23,5 @@ Content-Length: 63
 
 
  {"Nome": "thiago@publisoft.com.br", "DeviceID": "HexAparelho"}
+ 
+ http://200.150.70.194:1901/
