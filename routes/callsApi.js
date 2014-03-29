@@ -62,6 +62,31 @@ sendEmailToConfirmation = function(email, deviceId) {
     });
 }
 
+sendEmail = function(email, deviceId) {
+	var emailEncrypt = encrypt(email);
+	var deviceIdEncrypt = encrypt(deviceId);
+	
+	var textLink = "https://mocksapi.herokuapp.com/authenticated/" + emailEncrypt + "/" + deviceIdEncrypt;	
+	var mailOptions = {
+        from: "AComanda ArquitetaWeb <arquitetaweb@gmail.com>", // sender address
+        to: "marcos.tomazini@gmail.com",
+        subject: "AComanda - ArquitetaWeb Instalação", 
+        html: '<b>Signup Confirmation ?</b><br />'
+				+ 'Your email account is : ' + email + '<br />'
+				+ '<a href=\"'+ textLink.toString() + '\">Click here to activate your account.</a>'
+				+ '<br />'
+    }
+
+    smtpTransport.sendMail(mailOptions, function(error, response){
+        if(error){
+            console.log(error);
+        }else{
+            console.log("Message sent: " + response.message);
+        }
+        //smtpTransport.close(); // shut down the connection pool, no more messages
+    });
+}
+
 // DATA OBJECT
 var	produtogrupo = require('./data/produtogrupo');
 	produto = require('./data/produto');
@@ -280,7 +305,8 @@ exports.device = function(req, res) {
 					res.send({'success': "user authorized"});
 				} else {
 					console.log('user not authorized');
-					sendEmailToConfirmation(item.Nome, item.DeviceID);
+					//sendEmailToConfirmation(item.Nome, item.DeviceID);
+					sendEmail(item.Nome, item.DeviceID);
 					res.send(401, {'error': "user not authorized"});
 				}
 			} else {			
