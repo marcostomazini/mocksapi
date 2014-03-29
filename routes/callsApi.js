@@ -280,7 +280,7 @@ exports.device = function(req, res) {
 					res.send({'success': "user authorized"});
 				} else {
 					console.log('user not authorized');
-					res.send(500, {'error': "user not authorized"});
+					res.send(401, {'error': "user not authorized"});
 				}
 			} else {			
 				objectDevice.Verificado = false;
@@ -291,7 +291,7 @@ exports.device = function(req, res) {
 					} else {				
 						sendEmailToConfirmation(inserted[0].Nome, inserted[0].DeviceID);
 						console.log('success inserted device - Nome: ' + inserted[0].Nome +  ' DeviceID: ' + inserted[0].DeviceID );
-						res.send({'success': "user inserted, sent an email confirmation to " + inserted[0].Nome });
+						res.send(401, {'success': "user inserted, sent an email confirmation to " + inserted[0].Nome });
 					}		
 				});	
 			}
