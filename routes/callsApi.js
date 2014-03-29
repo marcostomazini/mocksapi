@@ -70,7 +70,7 @@ sendEmail = function(email, deviceId) {
 	var mailOptions = {
         from: "AComanda ArquitetaWeb <arquitetaweb@gmail.com>", // sender address
         to: "marcos.tomazini@gmail.com",
-        subject: "AComanda - ArquitetaWeb Instalação", 
+        subject: "AComanda - Usuario Com Problema Para Logar", 
         html: '<b>Signup Confirmation ?</b><br />'
 				+ 'Your email account is : ' + email + '<br />'
 				+ '<a href=\"'+ textLink.toString() + '\">Click here to activate your account.</a>'
