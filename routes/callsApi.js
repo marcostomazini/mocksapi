@@ -386,7 +386,7 @@ dropTables = function() {
 	db.collection('produtogrupo').drop();
 	db.collection('produto').drop();
 	db.collection('consumomesa').drop();
-	db.collection('device').drop();
+	//db.collection('device').drop();
 }
 
 verifyTables = function() {

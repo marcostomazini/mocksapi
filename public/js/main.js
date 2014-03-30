@@ -6,7 +6,8 @@ var AppRouter = Backbone.Router.extend({
         "itens/page/:page"	: "list",
         "itens/add"         : "addWine",
         "itens/:id"         : "wineDetails",
-        "about"             : "about"
+        "about"             : "about",
+		"authenticated"     : "authenticated"
     },
 
     initialize: function () {
@@ -51,11 +52,18 @@ var AppRouter = Backbone.Router.extend({
         }
         $('#content').html(this.aboutView.el);
         this.headerView.selectMenuItem('about-menu');
+    },
+	
+	authenticated: function () {
+        if (!this.authenticatedView) {
+            this.authenticatedView = new AuthenticatedView();
+        }
+        $('#content').html(this.authenticatedView.el);
     }
 
 });
 
-utils.loadTemplate(['HomeView', 'HeaderView', 'WineView', 'WineListItemView', 'AboutView'], function() {
+utils.loadTemplate(['HomeView', 'HeaderView', 'AboutView', 'AuthenticatedView'], function() {
     app = new AppRouter();
     Backbone.history.start();
 });
