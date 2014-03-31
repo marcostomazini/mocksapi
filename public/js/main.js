@@ -3,6 +3,7 @@ var AppRouter = Backbone.Router.extend({
     routes: {
         ""                               : "home",
         "about"                          : "about",
+		"help"                           : "help",
 		"authenticated/:hash/:token"     : "authenticated"
     },
 
@@ -24,21 +25,32 @@ var AppRouter = Backbone.Router.extend({
             this.aboutView = new AboutView();
         }
         $('#content').html(this.aboutView.el);
-        this.headerView.selectMenuItem('about-menu');
+		this.headerView.selectMenuItem('about-menu');
+    },
+	
+	help: function () {
+        if (!this.helpView) {
+            this.helpView = new HelpView();
+        }
+        $('#content').html(this.helpView.el);
+		this.headerView.selectMenuItem('help-menu');
     },
 	
 	authenticated: function (hash, token) {
-		//var wine = new Auth({_hash: hash, _token: token});
-		var wine = new Auth({_hash: hash, _token: token});
-        wine.fetch({success: function(){
-            $("#content").html(new AuthenticatedView({model: wine}).el);
-        }});		
-		this.headerView.selectMenuItem();
+		var obj = new Auth({_hash: hash, _token: token});
+        obj.fetch({
+			success: function(){
+				$("#content").html(new AuthenticatedView({model: obj}).el);
+			}, 
+			error: function(e){
+				$("#content").html(new ErrorView().el);
+			}
+		});		
     }
 
 });
 
-utils.loadTemplate(['HomeView', 'HeaderView', 'AboutView', 'AuthenticatedView'], function() {
+utils.loadTemplate(['HomeView', 'HeaderView', 'AboutView', 'HelpView', 'ErrorView', 'AuthenticatedView'], function() {
     app = new AppRouter();
     Backbone.history.start();
 });

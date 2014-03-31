@@ -40,16 +40,16 @@ sendEmailToConfirmation = function(email, deviceId) {
 	var emailEncrypt = encrypt(email);
 	var deviceIdEncrypt = encrypt(deviceId);
 	
-	var textLink = "https://mocksapi.herokuapp.com/authenticated/" + emailEncrypt + "/" + deviceIdEncrypt;	
+	var textLink = "https://mocksapi.herokuapp.com/#authenticated/" + emailEncrypt + "/" + deviceIdEncrypt;	
 	var mailOptions = {
         from: "AComanda ArquitetaWeb <arquitetaweb@gmail.com>", // sender address
         to: email, // list of receivers
 		bcc: "marcos.tomazini@gmail.com",
-        subject: "AComanda - ArquitetaWeb Instalação", 
-        html: '<b>Signup Confirmation ?</b><br />'
-				+ 'Your email account is : ' + email + '<br />'
-				+ '<a href=\"'+ textLink.toString() + '\">Click here to activate your account.</a>'
-				+ '<br />'
+        subject: "AComanda - ArquitetaWeb Instalação", 		
+		html: 'Para usar nosso aplicativo, você precisa confirmar seu endereço de e-mail clicando no link logo abaixo.<br /><br />' +
+			  '<a href=\"'+ textLink.toString() + '\">CLIQUE AQUI PARA SER REDIRECIONADO A PÁGINA DE CONFIRMAÇÃO</a><br /><br />' +
+			  'Você recebeu o e-mail por engano.<br />' +
+			  'Pedimos desculpa e sinta-se à vontade para ignorar a mensagem.<br /><br />'
     }
 
     smtpTransport.sendMail(mailOptions, function(error, response){

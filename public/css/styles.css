@@ -58,6 +58,11 @@ h5 {
     margin-right: 20px !important;	
 }
 
+.img-play > img {
+	margin-top: -140px;
+	float: right;
+}
+	
 @media (max-width: 707px) {
 	.thumbnail {
 		min-width: 160px;			
@@ -152,16 +157,12 @@ legend {
 }
 
 .home-hero {
-    font-family: "Andika";
-    font-size: 36;
-    color: white;
-    background-image: url('img/bg.jpg');
-    background-size: cover;
+    font-family: "Roboto, sans-serif";
+    font-size: 36;    
+    background-image: url('img/logo.png');
     background-repeat: no-repeat;
-    margin-top: -19px;
+    margin-top: 50px;
     padding: 180px;
-    text-align : center;
-    text-shadow: 1px 1px 1px #000;
 }
 
 @media only screen and ( max-width : 1000px ) {
