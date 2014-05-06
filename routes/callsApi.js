@@ -492,3 +492,20 @@ populateDevice = function() {
 		collection.insert(device.data(), {safe:true}, function(err, result) {});
     });
 };
+
+exports.validar = function(req, res) {
+	var objectTeste = req.body;	
+	var objectStr =  JSON.stringify(objectTeste);
+	console.log('Teste: ' +objectStr);
+	console.log('Nome: ' +objectTeste[0].Nome);
+	
+	if (objectTeste[0].Nome != 'RICARDO') {
+		res.send(500, {'error': 'Nome Invalido Digite - RICARDO'});
+	}
+	
+	if (objectTeste[0].Sobrenome != 'SILVA') {
+		res.send(500, {'error': 'Sobrenome Invalido Digite - SILVA'});
+	}
+	
+	res.send({'sucess': 'Dados validos'});
+};

@@ -42,6 +42,9 @@ app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&sit
 app.post('/api/device', api.device); // Listagem dos device
 app.post('/api/agendamento', api.clear); // agendamento pra limpar as mesas e os consumos
 
+// soneca teste
+app.post('/api/validar', api.validar); //
+
 app.get('/api/recreate', api.recriar); // recriar tabelas
 
 http.createServer(app).listen(app.get('port'), function () {
