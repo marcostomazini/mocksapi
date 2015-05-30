@@ -1,5 +1,5 @@
 {
-	"name": "acomanda api/ui",
+	"name": "acomanda api and ui",
 	"version": "0.0.1",
 	"private": true,
     "main" : "views/index.html",
