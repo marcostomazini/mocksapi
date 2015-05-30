@@ -14,12 +14,10 @@ module.exports = function(connection) {
             auth_token: String,
             createDate: {type: Date, required: true, default: moment()}
         }
-
     });
 
     userSchema.methods.hasExpired = function() {
         return (moment().diff(this.token.createDate, 'minutes')) > expired_time;
-
     };
 
     var User = connection.model('User', userSchema);

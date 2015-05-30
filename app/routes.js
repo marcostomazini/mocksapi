@@ -2,6 +2,9 @@ module.exports = function(app, passport, models) {
 
     var api = require('./api.js')(models);
 
+    var initialData = require('../db/initial.js')(models);
+    initialData.go();
+
     app.get('/', function(req, res){
         res.render('index');
     });
@@ -63,23 +66,7 @@ module.exports = function(app, passport, models) {
     app.delete('/api/person/:id', showClientRequest, passport.authenticate('local-authorization', {
         session: false
     }),api.removePerson);
-
-    app.get('/api/things', showClientRequest, passport.authenticate('local-authorization', {
-        session: false
-    }),api.getThings);
-
-    app.post('/api/thing', showClientRequest, passport.authenticate('local-authorization', {
-        session: false
-    }),api.createThing);
-
-    app.put('/api/thing/:id', showClientRequest, passport.authenticate('local-authorization', {
-        session: false
-    }),api.updateThing);
-
-    app.delete('/api/thing/:id', showClientRequest, passport.authenticate('local-authorization', {
-        session: false
-    }),api.removeThing);
-
+    
     function showClientRequest(req, res, next) {
         var request = {
             REQUEST : {

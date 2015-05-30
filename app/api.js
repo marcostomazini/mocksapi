@@ -2,7 +2,6 @@ module.exports = function(models){
 
     var User = models.user;
     var Person = models.person;
-    var Thing = models.thing;
     var Counters = models.counters;
 
     var cloudinary = require('cloudinary');
@@ -218,67 +217,6 @@ module.exports = function(models){
                 res.json({people: people });
             })
         },
-
-        createThing: function(req,res)
-        {
-
-            console.log(req.body);
-            var thing = req.body.thing;
-
-            if (typeof thing.name != "string") {
-                res.send(400, {'message': "Name must be a string!"});
-            }
-            if (typeof thing.size != "number") {
-                res.send(400, {'message': "Size must be a number!"});
-            }
-
-            var newThing = new Thing({ name: thing.name, size: thing.size})
-            newThing.save(function (err, thing) {
-                if (err){
-                    res.send(500, {'message': err});
-                }
-                res.json({ 'message': 'Thing was successfully created!'});
-            });
-
-        },
-        updateThing: function(req,res)
-        {
-            var _id = req.params.id;
-            console.log(req.body);
-            console.log(_id);
-
-            var thing = req.body.thing;
-
-            var query = { _id: _id };
-            Thing.update(query, {name:thing.name,size:thing.size}, null, function (err, thing) {
-                if (err){
-                    res.send(500, {'message': err});
-                }
-                res.json({ 'message': 'Thing was successfully updated!'});
-            })
-
-        },
-        removeThing: function(req,res)
-        {
-            var _id = req.params.id;
-
-            Thing.remove({ _id:_id}, function (err, user) {
-                if (err){
-                    res.send(500, {'message': err});
-                }
-                res.json({ 'message': 'Thing was successfully removed!'});
-            })
-
-        },
-
-        getThings: function(req,res)
-        {
-            Thing.find(function(err,things){
-                res.json({things: things });
-            });
-
-        }
-
 
     }
 

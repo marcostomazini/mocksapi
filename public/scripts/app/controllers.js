@@ -109,34 +109,6 @@
     mainAppControllers.controller('HomeCtrl', ['$scope', '$http',
         function ($scope, $http) {
 
-            $http({method: 'GET', url: '/api/things'}).
-                success(function(data, status, headers, config) {
-                    $scope.things = data.things;
-                }).
-                error(function(data, status, headers, config) {
-
-                    if(status!==401){
-                        noty({
-                            text: data,  
-                            type: 'error'                            
-                        });
-                    }
-                });
-
-            $http({method: 'GET', url: '/api/people'}).
-                success(function(data, status, headers, config) {
-                    $scope.people = data.people;
-                }).
-                error(function(data, status, headers, config) {
-                    if(status!==401){
-                         noty({
-                            text: data,  
-                            type: 'error'
-                        });
-                    }
-                });
-
-
             $scope.updatePerson = function(index,modify)
             {
                 var person = $scope.people[index];
@@ -158,47 +130,6 @@
                             }
                         });
                 }
-            }
-
-            $scope.updateThing = function(index,modify)
-            {
-                var thing = $scope.things[index];
-
-                if (modify) {
-                    $scope.things[index].modify=true;
-                } else {
-                    $http({method: 'PUT', url: '/api/thing/'+thing._id,data:{thing: thing}}).
-                    success(function(data, status, headers, config) {
-                        $scope.things[index].modify=false;
-                    }).
-                    error(function(data, status, headers, config) {
-                        if(status!==401){
-                            noty({
-                                text: data,  
-                                type: 'error'
-                            });
-                        }
-                    });
-                }
-            }
-
-            $scope.deleteThing = function(index)
-            {
-                var thing = $scope.things[index];
-
-                $http({method: 'DELETE', url: '/api/thing/'+thing._id}).
-                    success(function(data, status, headers, config) {
-                        $scope.things.splice(index, 1);
-
-                    }).
-                    error(function(data, status, headers, config) {
-                        if(status!==401){
-                            noty({
-                                text: data,  
-                                type: 'error'
-                            });
-                        }
-                    });
             }
 
             $scope.deletePerson = function(index)
@@ -517,36 +448,6 @@
 				}
 			
 			}
-        }
-    ]);
-
-    mainAppControllers.controller('ThingCtrl', ['$scope', '$http',
-        function ($scope, $http) {
-
-            $scope.thing = null;
-
-            $scope.createThing = function()
-            {
-                var thing = {thing: $scope.thing};
-
-                $http({method: 'POST', url: '/api/thing',data:thing}).
-                    success(function(data, status, headers, config) {
-                        $scope.thing = null;
-                        noty({
-                            text: data,  
-                            type: 'success'
-                        });
-                    }).
-                    error(function(data, status, headers, config) {
-                        if(status!==401){
-                            noty({
-                                text: data,  
-                                type: 'error'
-                            });
-                        }
-                    });
-            }
-
         }
     ]);
 

@@ -57,11 +57,6 @@ define([
                     controller: 'PersonAddCtrl',
                     access: { requiredLogin: true }
                 }).
-                when('/thing', {
-                    templateUrl: 'partials/auth/thing',
-                    controller: 'ThingCtrl',
-                    access: { requiredLogin: true }
-                }).
                 otherwise({
                     redirectTo: '/login'
                 });

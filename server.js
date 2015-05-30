@@ -20,11 +20,8 @@ if (app.get('env') === 'development') {
 
     var file_local = '/home/tomazini/Projetos/NodeJs/config_local.js';
     if (fs.existsSync(file_local)) {
-        console.log('found file');
         var uri_local = require(file_local); // not used, usage config/database.js
         process.env.MONGOLAB_URI = uri_local;
-    } else {
-        console.log('not found file');
     }
 };
 
