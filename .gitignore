@@ -1,4 +1,5 @@
 node_modules/
+bower_components/
 public/scripts/lib/
 *.idea/
 public/scripts/webapp.min.js
