@@ -1,6 +1,7 @@
 node_modules/
 bower_components/
 build/
+config/database.js
 public/scripts/lib/
 public/scripts/webapp.min.js
 tools/webapp.min.js
