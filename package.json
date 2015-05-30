@@ -1,5 +1,5 @@
 {
-	"name": "guarda-municipal-sarandi-register-people",
+	"name": "acomanda api/ui",
 	"version": "0.0.1",
 	"private": true,
     "main" : "views/index.html",

@@ -1,6 +1,6 @@
 module.exports = function(mongoose) {
 
-    var dbURI = process.env.MONGOLAB_URI || 'mongodb://localhost/mydb';
+    var dbURI = process.env.MONGOLAB_URI || 'mongodb://arquitetaweb:arqw3b@ds033069.mongolab.com:33069/heroku_app22498672';
 
     var connection = mongoose.createConnection(dbURI,{ server: { poolSize: 5 } });
 
@@ -16,7 +16,7 @@ module.exports = function(mongoose) {
 
     // When the connection is disconnected
     connection.on('disconnected', function () {
-        console.log('Mongoose default connection disconnected::: uri' + dbURI);
+        console.log('Mongoose default connection disconnected ::: uri ' + dbURI);
     });
 
     // If the Node process ends, close the Mongoose connection
