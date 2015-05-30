@@ -16,6 +16,11 @@ var ip     = process.env.IP || "localhost";
 
 var app = express();
 
+if (app.get('env') === 'development') {
+    var uri_local = require('../database_local'); // not used, usage config/database.js
+    process.env.MONGOLAB_URI = uri_local;
+};
+
 var connection = require('./config/database')(mongoose);
 var models = require('./models/models')(connection);
 require('./config/passport')(passport,models); // pass passport for configuration
