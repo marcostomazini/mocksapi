@@ -1,55 +1,65 @@
-var express = require('express'),
-	path = require('path'),
-	http = require('http'),
-	open = require('open'),
-    api = require('./routes/callsApi');
- 
+/**
+ * Module dependencies
+*/
+var express  = require('express');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var flash    = require('connect-flash');
+var http = require('http');
+var path = path = require('path');
+var uuid = require('node-uuid');
+
+
+var vhost = 'nodejsapp.local'
+var port     = process.env.PORT || 3000;
+var ip     = process.env.IP || "localhost";
+
 var app = express();
 
-app.configure(function () {
-    app.set('port', process.env.PORT || 3000);
-    //app.use(express.logger('dev'));  /* 'default', 'short', 'tiny', 'dev' */
-    
-	//app.use(express.bodyParser()); // deprecated
-	
-	app.use(express.json());
-	app.use(express.urlencoded());
+var connection = require('./config/database')(mongoose);
+var models = require('./models/models')(connection);
+require('./config/passport')(passport,models); // pass passport for configuration
+
+
+
+app.configure(function() {
+    // set up our express application
+    app.set('port', port);
+    app.use(express.logger('dev')); // log every request to the console
+    app.use(express.cookieParser()); // read cookies (needed for auth)
+    app.use(express.bodyParser()); // get information from html forms
+    app.set('view engine', 'html'); // set up html for templating
+    app.engine('.html', require('ejs').__express);
+    app.set('views', __dirname + '/views');
     app.use(express.static(path.join(__dirname, 'public')));
+    //app.use(express.session({ secret: 'keyboard cat' }));// persistent login sessions
+    app.use(express.methodOverride());
+    app.use(express.json());
+    app.use(express.urlencoded());
+    //app.use(flash()); // use connect-flash for flash messages stored in session
+
+    //passport configuration
+    app.use(passport.initialize());
+    //app.use(passport.session());// persistent login sessions
+    //provagg
+    app.use(app.router); //init routing
+
 });
 
-// TESTES
-app.get('/api/findById/:id', api.findById); // TESTE FIND ONE
-app.get('/', api.findRaiz); 
+require('./app/routes.js')(app, passport,models); // load our routes and pass in our app and fully configured passport
 
-// Mesas
-app.get('/api/mesas', api.mesas); // Listagem das mesas
+// development only
+if (app.get('env') === 'development') {
+    app.use(express.errorHandler());
+};
 
-// Consumo da mesa
-app.get('/api/mesa/conta/:idmesa', api.getfecharconta); // Pedir para fechar conta mesaid
-app.get('/api/mesa/:idmesa', api.getconsumomesa); // Pega todo o consumo da mesaid
-app.get('/api/mesa/:idmesa/:qtde', api.getconsumorecente); // Pega todo o consumo da mesaid / qtde = quantidade de registros a trazer
-app.post('/api/mesa', api.addconsumomesa); // Adiciona itens a mesa via Json Object
+// production only
+if (app.get('env') === 'production') {
+    // TODO
+};
 
-// Sincronização
-app.get('/authenticated/:hash/:token', api.liberarUsuario); 
-app.get('/api/produto', api.produto); // Listagem dos produtos
-app.get('/api/produtogrupo', api.produtogrupo); // Listagem dos grupos de produto
-app.get('/api/garcom', api.garcom); // Listagem dos garçons
+//express.vhost(vhost, app);
 
-app.put('/api/atualizarmesa', api.atualizarmesa); // /api/atualizarmesa?id=1&situacao=2 - via PUT URL
-
-// Limpeza Automatica dos Dados
-app.post('/api/device', api.device); // Listagem dos device
-app.post('/api/agendamento', api.clear); // agendamento pra limpar as mesas e os consumos
-
-// soneca teste
-app.post('/api/validar', api.validar); //
-
-app.get('/api/recreate', api.recriar); // recriar tabelas
-
-http.createServer(app).listen(app.get('port'), function () {
-    console.log("Express server listening on port " + app.get('port'));
-	
-	var webPage = "http://localhost:" + app.get('port');
-	open(webPage);
+var server = http.createServer(app).listen(app.get('port'), function () {
+    console.log('Express server listening on port ' + vhost+":"+server.address().port);
 });

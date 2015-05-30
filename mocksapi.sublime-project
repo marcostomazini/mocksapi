@@ -1,0 +1,9 @@
+{
+   "folders":
+   [
+      {
+         "path": "/home/tomazini/Projetos/NodeJs/mocksapi",
+         "folder_exclude_patterns": [".svn", "bower_components","node_modules","build"]
+      }
+   ]
+}

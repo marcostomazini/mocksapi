@@ -1,0 +1,49 @@
+<nav class="navbar navbar-default no-bottom-margin" ng-controller="NavCtrl" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#/login">
+            <span class="white">Arquiteta</span>
+            <span class="grey">Web</span>            
+        </a>
+    </div>
+    <!-- #section:basics/navbar.nav -->
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            <li ng-hide="isAuthenticated"><a href="#/login">Entrar</a></li>
+
+            <li ng-show="isAuthenticated"><a href="#/home">Principal</a></li>
+
+            <li ng-show="isAuthenticated" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Ações&nbsp;
+                    <i class="ace-icon fa fa-angle-down bigger-110"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-light-blue dropdown-caret">
+                    <li>
+                        <a href="#/person">
+                            <i class="ace-icon fa fa-eye bigger-110 blue"></i>
+                            Visualizar Pessoa
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/person-add">
+                            <i class="ace-icon fa fa-user bigger-110 blue"></i>
+                            Adicionar Pessoa
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li ng-show="isAuthenticated"><a href="" ng-click="logout()">Sair</a></li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+
+    <!-- /section:basics/navbar.nav -->
+
+</nav>
