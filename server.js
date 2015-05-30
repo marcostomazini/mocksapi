@@ -8,7 +8,7 @@ var flash    = require('connect-flash');
 var http = require('http');
 var path = path = require('path');
 var uuid = require('node-uuid');
-
+var fs = require('fs');
 
 var vhost = 'acomanda.local'
 var port     = process.env.PORT || 3000;
@@ -17,8 +17,15 @@ var ip     = process.env.IP || "localhost";
 var app = express();
 
 if (app.get('env') === 'development') {
-    var uri_local = require('../database_local'); // not used, usage config/database.js
-    process.env.MONGOLAB_URI = uri_local;
+
+    var file_local = '/home/tomazini/Projetos/NodeJs/config_local.js';
+    if (fs.existsSync(file_local)) {
+        console.log('found file');
+        var uri_local = require(file_local); // not used, usage config/database.js
+        process.env.MONGOLAB_URI = uri_local;
+    } else {
+        console.log('not found file');
+    }
 };
 
 var connection = require('./config/database')(mongoose);
