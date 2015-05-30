@@ -10,7 +10,7 @@ var path = path = require('path');
 var uuid = require('node-uuid');
 
 
-var vhost = 'nodejsapp.local'
+var vhost = 'acomanda.local'
 var port     = process.env.PORT || 3000;
 var ip     = process.env.IP || "localhost";
 
