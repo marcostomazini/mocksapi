@@ -1,6 +1,6 @@
 module.exports = function(mongoose) {
 
-    var dbURI = 'mongodb://user:password@xxxxx.mongolab.com:port/xxxxxxxxxxxxxxx';
+    var dbURI = 'mongodb://arquitetaweb:arqw3b@ds033069.mongolab.com:33069/heroku_app22498672';
     var connection = mongoose.createConnection(dbURI,{ server: { poolSize: 5 } });
 
     // When successfully connected
